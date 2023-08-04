@@ -1,0 +1,20 @@
+$symbol-color: grey;
+
+.list {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  font-size: 1.5rem;
+  &__item {
+    display: flex;
+    column-gap: 5px;
+  }
+  &__name {
+  }
+  &__symbol {
+    font-size: 1.2rem;
+    color: $symbol-color;
+  }
+  &__change {
+  }
+}
