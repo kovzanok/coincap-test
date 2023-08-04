@@ -1,6 +1,6 @@
 type CryptoListType = Pick<
   CryptoType,
-  "name" | "symbol" | "changePercent24Hr" | "id"
+  "name" | "symbol" | "priceUsd" | "id"
 >;
 
 type CryptoType = {

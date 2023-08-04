@@ -6,19 +6,19 @@ export default function PopularCryptoList() {
       id: "bitcoin",
       name: "Bitcoin",
       symbol: "BTC",
-      changePercent24Hr: "-0.8101417214350335",
+      priceUsd: "6929.8217756835584756",
     },
     {
       id: "ethereum",
       symbol: "ETH",
       name: "Ethereum",
-      changePercent24Hr: "-0.0999626159535347",
+      priceUsd: "404.9774667045200896",
     },
     {
       id: "bitcoin",
       name: "XRP",
       symbol: "XRP",
-      changePercent24Hr: "-1.9518258685302665",
+      priceUsd: "0.4202870472643482",
     },
   ];
 
