@@ -24,17 +24,12 @@ export default function PopularCryptoList() {
 
   return (
     <ul className={cls["list"]}>
-      {popularCrypto.map(({ name, symbol, changePercent24Hr }, idx) => (
+      {popularCrypto.map(({ name, symbol, priceUsd }, idx) => (
         <li className={cls["list__item"]} key={idx}>
           <div className={cls["list__name"]}>{name}</div>
           <div className={cls["list__symbol"]}>{symbol}</div>
-          <div
-            style={{
-              color: Number(changePercent24Hr) >= 0 ? "green" : "red",
-            }}
-            className={cls["list__change"]}
-          >
-            {Number(changePercent24Hr).toFixed(5)}%
+          <div className={cls["list__change"]}>
+            {Number(priceUsd).toFixed(5)}$
           </div>
         </li>
       ))}
