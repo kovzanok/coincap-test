@@ -1,0 +1,20 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  margin: 0;
+  > * {
+    font-family: "Courier New", Courier, monospace;
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  border: none;
+  outline: none;
+}
