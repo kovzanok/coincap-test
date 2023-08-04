@@ -1,3 +1,4 @@
+import { calcColorChange, stringToFixed } from "../../utils";
 import Button from "../Button";
 import cls from "./Table.module.scss";
 
@@ -977,24 +978,24 @@ export default function Table() {
                   {name}
                   <span className={cls["cell__symbol"]}>{symbol}</span>
                 </td>
-                <td className={cls.cell}>{Number(priceUsd).toFixed(4)} $</td>
+                <td className={cls.cell}>{stringToFixed(priceUsd, 4)} $</td>
                 <td
                   className={cls.cell}
                   style={{
-                    color: Number(changePercent24Hr) >= 0 ? "green" : "red",
+                    color: calcColorChange(changePercent24Hr),
                   }}
                 >
-                  {Number(changePercent24Hr).toFixed(2)} %
+                  {stringToFixed(changePercent24Hr, 2)} %
+                </td>
+                <td className={cls.cell}>{stringToFixed(marketCapUsd, 2)} $</td>
+                <td className={cls.cell}>{stringToFixed(volumeUsd24Hr, 2)}</td>
+                <td className={cls.cell}>
+                  {stringToFixed(supply, 2)} {symbol}
                 </td>
                 <td className={cls.cell}>
-                  {Number(marketCapUsd).toFixed(2)} $
-                </td>
-                <td className={cls.cell}>{Number(volumeUsd24Hr).toFixed(2)}</td>
-                <td className={cls.cell}>
-                  {Number(supply).toFixed(2)} {symbol}
-                </td>
-                <td className={cls.cell}>
-                  {Number(maxSupply)?.toFixed(2)} {symbol}
+                  {Number(maxSupply)
+                    ? `${stringToFixed(maxSupply, 2)} ${symbol}`
+                    : "-"}
                 </td>
                 <td className={cls.cell}>
                   <Button>+</Button>
