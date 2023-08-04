@@ -1,7 +1,7 @@
 import cls from "./PopularCryptoList.module.scss";
 
 export default function PopularCryptoList() {
-  const popularCrypto: CryptoType[] = [
+  const popularCrypto: CryptoListType[] = [
     {
       id: "bitcoin",
       name: "Bitcoin",
