@@ -4,6 +4,8 @@ $symbol-color: grey;
   display: flex;
   align-items: center;
   column-gap: 20px;
+  padding-bottom: 10px;
+  overflow: auto;
   font-size: 1.5rem;
   &__item {
     display: flex;
