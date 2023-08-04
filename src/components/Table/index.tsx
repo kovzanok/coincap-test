@@ -942,64 +942,68 @@ export default function Table() {
   ];
 
   return (
-    <table className={cls.table}>
-      <thead>
-        <tr className={cls.row}>
-          <th className={cls["head-cell"]}>#</th>
-          <th className={cls["head-cell"]}>Name</th>
-          <th className={cls["head-cell"]}>Price USD</th>
-          <th className={cls["head-cell"]}>24h %</th>
-          <th className={cls["head-cell"]}>Market Cap USD</th>
-          <th className={cls["head-cell"]}>Volume(24h)</th>
-          <th className={cls["head-cell"]}>Supply</th>
-          <th className={cls["head-cell"]}>Max supply</th>
-          <th className={cls["head-cell"]}></th>
-        </tr>
-      </thead>
-      <tbody>
-        {arr.map(
-          ({
-            id,
-            symbol,
-            name,
-            rank,
-            priceUsd,
-            supply,
-            maxSupply,
-            marketCapUsd,
-            volumeUsd24Hr,
-            changePercent24Hr,
-          }) => (
-            <tr className={cls.row} key={id}>
-              <td className={cls.cell}>{rank}</td>
-              <td className={cls.cell}>
-                {name}
-                <span className={cls['cell__symbol']}>{symbol}</span>
-              </td>
-              <td className={cls.cell}>{Number(priceUsd).toFixed(4)} $</td>
-              <td
-                className={cls.cell}
-                style={{
-                  color: Number(changePercent24Hr) >= 0 ? "green" : "red",
-                }}
-              >
-                {Number(changePercent24Hr).toFixed(2)} %
-              </td>
-              <td className={cls.cell}>{Number(marketCapUsd).toFixed(2)} $</td>
-              <td className={cls.cell}>{Number(volumeUsd24Hr).toFixed(2)}</td>
-              <td className={cls.cell}>
-                {Number(supply).toFixed(2)} {symbol}
-              </td>
-              <td className={cls.cell}>
-                {Number(maxSupply).toFixed(2)} {symbol}
-              </td>
-              <td className={cls.cell}>
-                <Button>+</Button>
-              </td>
-            </tr>
-          )
-        )}
-      </tbody>
-    </table>
+    <div className={cls.wrapper}>
+      <table className={cls.table}>
+        <thead>
+          <tr className={cls.row}>
+            <th className={cls["head-cell"]}>#</th>
+            <th className={cls["head-cell"]}>Name</th>
+            <th className={cls["head-cell"]}>Price USD</th>
+            <th className={cls["head-cell"]}>24h %</th>
+            <th className={cls["head-cell"]}>Market Cap USD</th>
+            <th className={cls["head-cell"]}>Volume(24h)</th>
+            <th className={cls["head-cell"]}>Supply</th>
+            <th className={cls["head-cell"]}>Max supply</th>
+            <th className={cls["head-cell"]}></th>
+          </tr>
+        </thead>
+        <tbody>
+          {arr.map(
+            ({
+              id,
+              symbol,
+              name,
+              rank,
+              priceUsd,
+              supply,
+              maxSupply,
+              marketCapUsd,
+              volumeUsd24Hr,
+              changePercent24Hr,
+            }) => (
+              <tr className={cls.row} key={id}>
+                <td className={cls.cell}>{rank}</td>
+                <td className={cls.cell}>
+                  {name}
+                  <span className={cls["cell__symbol"]}>{symbol}</span>
+                </td>
+                <td className={cls.cell}>{Number(priceUsd).toFixed(4)} $</td>
+                <td
+                  className={cls.cell}
+                  style={{
+                    color: Number(changePercent24Hr) >= 0 ? "green" : "red",
+                  }}
+                >
+                  {Number(changePercent24Hr).toFixed(2)} %
+                </td>
+                <td className={cls.cell}>
+                  {Number(marketCapUsd).toFixed(2)} $
+                </td>
+                <td className={cls.cell}>{Number(volumeUsd24Hr).toFixed(2)}</td>
+                <td className={cls.cell}>
+                  {Number(supply).toFixed(2)} {symbol}
+                </td>
+                <td className={cls.cell}>
+                  {Number(maxSupply)?.toFixed(2)} {symbol}
+                </td>
+                <td className={cls.cell}>
+                  <Button>+</Button>
+                </td>
+              </tr>
+            )
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 }
