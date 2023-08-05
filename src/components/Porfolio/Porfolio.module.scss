@@ -3,10 +3,19 @@
 .portfolio {
   font-size: 1.7rem;
   text-wrap: nowrap;
-  &__add {
-    font-weight: 600;
-  }
   @include media-mobile {
     font-size: 1.4rem;
   }
+}
+
+.title {
+  color: grey;
+}
+
+.initial {
+  font-weight: 700;
+}
+
+.diff {
+  color: green;
 }
