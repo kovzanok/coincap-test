@@ -1,8 +1,20 @@
+import { useState } from "react";
 import { addComasToStr, calcColorChange, stringToFixed } from "../../utils";
+import AddModal from "../AddModal";
 import Button from "../Button";
 import cls from "./CryptoInfo.module.scss";
 
 export default function CryptoInfo() {
+  const [open, setOpen] = useState(false);
+
+  const openModal = () => {
+    setOpen(true);
+  };
+
+  const closeModal: React.MouseEventHandler = (e) => {
+    setOpen(false);
+  };
+
   const crypto: CryptoType = {
     id: "bitcoin",
     rank: "1",
@@ -34,7 +46,7 @@ export default function CryptoInfo() {
             {stringToFixed(crypto.changePercent24Hr, 2)}% (24h)
           </div>
         </div>
-        <Button>Add</Button>
+        <Button onClick={openModal}>Add</Button>
       </div>
       <div className={cls.row}>
         <span className={cls.text}>VWAP</span>
@@ -56,6 +68,7 @@ export default function CryptoInfo() {
         <span className={cls.text}>Max supply</span>
         {addComasToStr(String(Number(crypto.maxSupply)))} {crypto.symbol}
       </div>
+      <AddModal close={closeModal} {...crypto} opened={open} />
     </div>
   );
 }
