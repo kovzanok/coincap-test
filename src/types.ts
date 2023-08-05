@@ -18,7 +18,7 @@ type CryptoType = {
 };
 
 type CryptoHistoryTimeStamp = {
-  price: string;
+  priceUsd: string;
   time: string;
 };
 
