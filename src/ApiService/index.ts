@@ -27,4 +27,15 @@ export class ApiService {
     const { data }: { data: CryptoType; timestamp: number } = await res.json();
     return data;
   }
+
+  static async getPriceHistoryById(id: string, signal: AbortSignal) {
+    const url = new URL(
+      `/v2/assets/${id}/history?interval=h12`,
+      ApiService.BASE_URL
+    );
+    const res = await fetch(url, { signal });
+    const { data }: { data: CryptoHistoryTimeStamp[]; timestamp: number } =
+      await res.json();
+    return data;
+  }
 }
