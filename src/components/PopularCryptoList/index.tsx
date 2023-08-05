@@ -9,7 +9,7 @@ export default function PopularCryptoList() {
   const [popularCrypto, setPopularCrypto] = useState<CryptoType[]>([]);
 
   useFetching(
-    (signal) => ApiService.getAllCrypto(0, signal, 3),
+    (signal) => ApiService.getAllCrypto({ signal, limit: 3 }),
     setPopularCrypto,
     []
   );
