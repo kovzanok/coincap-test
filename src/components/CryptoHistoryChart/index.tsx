@@ -162,6 +162,7 @@ const history: CryptoHistoryTimeStamp[] = [
 export default function CryptoHistoryChart() {
   return (
     <div className={cls.chart}>
+      <h2 className={cls.title}>Price history</h2>
       <LineChart width={700} height={300} data={history}>
         <CartesianGrid strokeDasharray='3 3' />
         <XAxis dataKey='time' />
