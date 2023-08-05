@@ -25,3 +25,10 @@ type CryptoHistoryTimeStamp = {
 type PorfolioCrypto = Pick<CryptoType, "id"> & {
   amount: number;
 };
+
+type AllCryptoRequestParams = {
+  signal: AbortSignal;
+  page?: number;
+  ids?: string[];
+  limit?: number;
+};
