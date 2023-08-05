@@ -1,0 +1,9 @@
+@import "../../style/mixins";
+
+.container {
+  max-width: 1240px;
+  margin: auto;
+  @include media-desktop {
+    padding: 10px 10px!important;
+  }
+}

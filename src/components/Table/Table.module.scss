@@ -1,0 +1,102 @@
+@import "../../style/mixins";
+
+.wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 1060px;
+  border-collapse: collapse;
+  border-spacing: 30px 0;
+}
+
+.container {
+  padding-top: 20px;
+}
+
+.row {
+  &:first-of-type {
+    border: none;
+  }
+  border-top: 1px solid black;
+}
+
+.head-cell {
+  font-size: 1.7rem;
+  padding-bottom: 10px;
+  text-align: center;
+
+  &:nth-child(1) {
+    @include media-table-breakpoint {
+      left: 0px;
+    }
+  }
+
+  &:nth-child(2) {
+    width: 20%;
+    padding-left: 20px;
+    text-align: left;
+    @include media-table-breakpoint {
+      left: 20px;
+    }
+    @include media-mobile {
+      width: 6%;
+    }
+  }
+
+  &:nth-child(1),
+  &:nth-child(2) {
+    @include media-table-breakpoint {
+      position: sticky;
+      background-color: white;
+    }
+  }
+}
+
+.cell {
+  padding: 10px 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-align: center;
+  &:last-child {
+    padding-left: 20px;
+  }
+
+  @include media-mobile {
+    &:last-child {
+      padding-left: 0;
+    }
+  }
+
+  &:nth-child(1) {
+    @include media-table-breakpoint {
+      left: 0px;
+    }
+  }
+
+  &:nth-child(1),
+  &:nth-child(2) {
+    @include media-table-breakpoint {
+      position: sticky;
+      background-color: white;
+    }
+  }
+
+  &:nth-child(2) {
+    padding-left: 20px;
+    text-align: left;
+    width: 20%;
+    @include media-table-breakpoint {
+      left: 20px;
+    }
+    @include media-mobile {
+      width: 6%;
+    }
+  }
+
+  &__symbol {
+    padding-left: 10px;
+    color: grey;
+  }
+}

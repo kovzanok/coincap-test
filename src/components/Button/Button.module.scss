@@ -1,0 +1,23 @@
+@import "../../style/placeholders";
+
+$primary-color: #7979f0;
+
+.button {
+  @extend %transition;
+  background-color: $primary-color;
+  border: 1px solid $primary-color;
+  color: white;
+  font-size: 2rem;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(255, 255, 255);
+    color: $primary-color;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
