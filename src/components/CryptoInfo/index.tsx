@@ -54,7 +54,7 @@ export default function CryptoInfo() {
             <span className={cls.symbol}>{crypto.symbol}</span>
           </div>
           <div className={cls.price}>
-            ${stringToFixed(crypto.priceUsd, 2)}
+            ${stringToFixed(crypto.priceUsd, 4)}
           </div>
           <div
             className={cls.change}
@@ -67,7 +67,7 @@ export default function CryptoInfo() {
       </div>
       <div className={cls.row}>
         <span className={cls.text}>VWAP</span>
-        {addComasToStr(stringToFixed(crypto.vwap24Hr, 2))}
+        {addComasToStr(stringToFixed(crypto.vwap24Hr, 4))}
       </div>
       <div className={cls.row}>
         <span className={cls.text}>Market cap</span> ${" "}
