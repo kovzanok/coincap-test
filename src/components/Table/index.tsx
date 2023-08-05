@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   calcColorChange,
   shortenMillionNumber,
@@ -7,9 +8,18 @@ import Button from "../Button";
 import Container from "../Container";
 import cls from "./Table.module.scss";
 import { useNavigate } from "react-router-dom";
+import AddModal from "../AddModal";
+
+type CryptoData = Pick<CryptoType, "name" | "symbol" | "id">;
 
 export default function Table() {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [cryptoData, setCryptoData] = useState<CryptoData>({
+    name: "",
+    symbol: "",
+    id: "",
+  });
   const arr: CryptoType[] = [
     {
       id: "bitcoin",
@@ -949,6 +959,22 @@ export default function Table() {
     },
   ];
 
+  const openModal = ({ name, symbol, id }: CryptoData) => {
+    setOpen(true);
+    setCryptoData({ name, id, symbol });
+  };
+
+  const closeModal: React.MouseEventHandler = (e) => {
+    const target = e.target;
+    if (
+      target instanceof HTMLElement &&
+      !target.className.includes("_modal__")
+    ) {
+      setOpen(false);
+      setCryptoData({ name: "", id: "", symbol: "" });
+    }
+  };
+
   return (
     <main>
       <Container className={cls.container}>
@@ -1014,7 +1040,14 @@ export default function Table() {
                         : "-"}
                     </td>
                     <td className={cls.cell}>
-                      <Button>+</Button>
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openModal({ name, symbol, id });
+                        }}
+                      >
+                        +
+                      </Button>
                     </td>
                   </tr>
                 )
@@ -1023,6 +1056,7 @@ export default function Table() {
           </table>
         </div>
       </Container>
+      <AddModal close={closeModal} {...cryptoData} opened={open} />
     </main>
   );
 }

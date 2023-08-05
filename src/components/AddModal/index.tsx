@@ -1,11 +1,25 @@
 import Button from "../Button";
 import cls from "./AddModal.module.scss";
 
-export default function AddModal() {
-  const name = "Bitcoin";
-  const symbol = "BTC";
+type AddModalProps = {
+  opened: boolean;
+  name: string;
+  symbol: string;
+  id: string;
+  close: React.MouseEventHandler;
+};
+
+export default function AddModal({
+  name,
+  symbol,
+  id,
+  opened,
+  close,
+}: AddModalProps) {
+  if (!opened) return null;
+
   return (
-    <div className={cls.modal}>
+    <div onClick={close} className={cls.modal}>
       <div className={cls["modal__body"]}>
         <h1 className={cls["modal__title"]}>Add {name} to portfolio</h1>
         <form className={cls["modal__form"]}>
@@ -16,7 +30,7 @@ export default function AddModal() {
           <Button>Add crypto</Button>
         </form>
         <div className={cls["modal__button"]}>
-          <Button>Back</Button>
+          <Button onClick={close}>Back</Button>
         </div>
       </div>
     </div>
