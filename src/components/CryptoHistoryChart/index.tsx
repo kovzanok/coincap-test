@@ -28,7 +28,8 @@ export default function CryptoHistoryChart() {
     setHistory,
     [id]
   );
-  
+  const priceArr = history.map((item) => Math.round(Number(item.priceUsd)));
+
   return (
     <div className={cls.chart}>
       <h2 className={cls.title}>Price history</h2>
@@ -37,7 +38,7 @@ export default function CryptoHistoryChart() {
       ) : (
         <ResponsiveContainer width='100%' height={300}>
           <LineChart
-            margin={{right:0}}
+            margin={{ right: 0 }}
             width={700}
             height={300}
             data={history.map(({ priceUsd, time }) => ({
@@ -46,9 +47,13 @@ export default function CryptoHistoryChart() {
             }))}
           >
             <CartesianGrid strokeDasharray='3 3' />
-            <XAxis tickMargin={10}  minTickGap={40} dataKey='time' />
+            <XAxis tickMargin={10} minTickGap={40} dataKey='time' />
             <Tooltip />
-            <YAxis tickMargin={10} domain={["auto", "auto"]} unit='$' />
+            <YAxis
+              tickMargin={10}
+              domain={[Math.min(...priceArr), Math.max(...priceArr)]}
+              unit='$'
+            />
             <Line
               dot={false}
               type='monotone'
