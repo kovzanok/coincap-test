@@ -18,6 +18,7 @@
     width: 30%;
     background-color: white;
     border-radius: 20px;
+    min-width: 300px;
   }
 
   &__title {
@@ -46,6 +47,7 @@
   }
 
   &__label {
+    width: 60%;
     display: flex;
     align-items: center;
     column-gap: 10px;
