@@ -988,7 +988,7 @@ export default function Table() {
                       {name}
                       <span className={cls["cell__symbol"]}>{symbol}</span>
                     </td>
-                    <td className={cls.cell}>{stringToFixed(priceUsd, 4)} $</td>
+                    <td className={cls.cell}>{stringToFixed(priceUsd, 6)} $</td>
                     <td
                       className={cls.cell}
                       style={{
