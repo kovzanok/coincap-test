@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   calcColorChange,
@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import AddModal from "../AddModal";
 import { ApiService } from "../../ApiService";
 import Loader from "../Loader";
+import { useFetching } from "../../hooks";
 
 type CryptoData = Pick<CryptoType, "name" | "symbol" | "id">;
 
@@ -30,12 +31,14 @@ export default function Table() {
   const [cryptoArr, setCryptoArr] = useState<CryptoType[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    ApiService.getAllCrypto(page).then((res) => {
+  useFetching(
+    (signal) => ApiService.getAllCrypto(page, signal),
+    (res) => {
       setCryptoArr(res);
       setLoading(false);
-    });
-  }, [page]);
+    },
+    [page]
+  );
 
   const openModal = ({ name, symbol, id }: CryptoData) => {
     setOpen(true);

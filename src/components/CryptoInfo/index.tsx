@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { addComasToStr, calcColorChange, stringToFixed } from "../../utils";
 import AddModal from "../AddModal";
 import Button from "../Button";
 import cls from "./CryptoInfo.module.scss";
 import { ApiService } from "../../ApiService";
 import Loader from "../Loader";
+import { useFetching } from "../../hooks";
 
 const initialState: CryptoType = {
   id: "",
@@ -27,20 +28,24 @@ export default function CryptoInfo() {
   const [open, setOpen] = useState(false);
   const { id } = useParams();
 
-  useEffect(() => {
-    if (id) {
-      ApiService.getCryptoById(id).then((res) => {
-        setCrypto(res);
-        setLoading(false);
-      });
-    }
-  }, [id]);
+  useFetching(
+    (signal) => {
+      if (id) {
+        return ApiService.getCryptoById(id, signal);
+      }
+    },
+    (res) => {
+      setCrypto(res);
+      setLoading(false);
+    },
+    [id]
+  );
 
   const openModal = () => {
     setOpen(true);
   };
 
-  const closeModal: React.MouseEventHandler = (e) => {
+  const closeModal: React.MouseEventHandler = () => {
     setOpen(false);
   };
 
@@ -50,12 +55,9 @@ export default function CryptoInfo() {
       <div className={cls.primary}>
         <div>
           <div>
-            {crypto.name}{" "}
-            <span className={cls.symbol}>{crypto.symbol}</span>
+            {crypto.name} <span className={cls.symbol}>{crypto.symbol}</span>
           </div>
-          <div className={cls.price}>
-            ${stringToFixed(crypto.priceUsd, 4)}
-          </div>
+          <div className={cls.price}>${stringToFixed(crypto.priceUsd, 4)}</div>
           <div
             className={cls.change}
             style={{ color: calcColorChange(crypto.changePercent24Hr) }}

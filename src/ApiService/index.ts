@@ -4,6 +4,7 @@ export class ApiService {
 
   static async getAllCrypto(
     page: number,
+    signal: AbortSignal,
     limit = ApiService.LIMIT
   ): Promise<CryptoType[]> {
     const url = new URL("/v2/assets", ApiService.BASE_URL);
@@ -11,15 +12,18 @@ export class ApiService {
       ["limit", String(limit)],
       ["offset", `${limit * page}`],
     ]);
-    const res = await fetch(`${url}?${searchParams.toString()}`);
+    const res = await fetch(`${url}?${searchParams.toString()}`, { signal });
     const { data }: { data: CryptoType[]; timestamp: number } =
       await res.json();
     return data;
   }
 
-  static async getCryptoById(id: string): Promise<CryptoType> {
+  static async getCryptoById(
+    id: string,
+    signal: AbortSignal
+  ): Promise<CryptoType> {
     const url = new URL(`/v2/assets/${id}`, ApiService.BASE_URL);
-    const res = await fetch(url);
+    const res = await fetch(url, { signal });
     const { data }: { data: CryptoType; timestamp: number } = await res.json();
     return data;
   }
