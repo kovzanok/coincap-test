@@ -22,6 +22,6 @@ type CryptoHistoryTimeStamp = {
   time: string;
 };
 
-type PorfolioCrypto = Pick<CryptoType, "name" | "symbol" | "id"> & {
+type PorfolioCrypto = Pick<CryptoType, "id"> & {
   amount: number;
 };
