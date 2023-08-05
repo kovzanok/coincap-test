@@ -5,8 +5,9 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  ResponsiveContainer,
 } from "recharts";
-import cls from './CryptoHistoryChart.module.scss';
+import cls from "./CryptoHistoryChart.module.scss";
 import { stringToFixed } from "../../utils";
 
 const history: CryptoHistoryTimeStamp[] = [
@@ -163,13 +164,15 @@ export default function CryptoHistoryChart() {
   return (
     <div className={cls.chart}>
       <h2 className={cls.title}>Price history</h2>
-      <LineChart width={700} height={300} data={history}>
-        <CartesianGrid strokeDasharray='3 3' />
-        <XAxis dataKey='time' />
-        <Tooltip />
-        <YAxis domain={["auto", "auto"]} unit='$' />
-        <Line type='monotone' dataKey='price' stroke='#6868d9' />
-      </LineChart>
+      <ResponsiveContainer  width='100%' height={300}>
+        <LineChart width={700} height={300} data={history}>
+          <CartesianGrid strokeDasharray='3 3' />
+          <XAxis dataKey='time' />
+          <Tooltip />
+          <YAxis domain={["auto", "auto"]} unit='$' />
+          <Line type='monotone' dataKey='price' stroke='#6868d9' />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 }
