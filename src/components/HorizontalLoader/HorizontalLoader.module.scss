@@ -2,7 +2,7 @@
   width: 32px;
   height: 32px;
   position: relative;
-  left: 30px;
+  left: calc(100% - 80%);
   border-radius: 50%;
   color: #5f65c9;
   animation: fill 1s ease-in infinite alternate;
