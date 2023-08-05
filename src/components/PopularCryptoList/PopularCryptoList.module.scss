@@ -4,19 +4,23 @@ $symbol-color: grey;
   display: flex;
   align-items: center;
   column-gap: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
   overflow: auto;
   font-size: 1.5rem;
   &__item {
     display: flex;
     column-gap: 5px;
   }
-  &__name {
-  }
   &__symbol {
     font-size: 1.2rem;
     color: $symbol-color;
   }
-  &__change {
+  &__money {
+    display: flex;
+    column-gap: 5px;
+    padding: 0 4px;
+    border-radius: 5px;
+    background-color: rgb(256, 0, 0);
+    backdrop-filter: opacity(20%);
   }
 }
