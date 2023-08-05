@@ -25,11 +25,7 @@
 .head-cell {
   font-size: 1.7rem;
   padding-bottom: 10px;
-  text-align: right;
-
-  @include media-mobile {
-    text-align: left;
-  }
+  text-align: center;
 
   &:nth-child(1) {
     @include media-table-breakpoint {
@@ -62,14 +58,12 @@
   padding: 10px 0;
   font-size: 1.5rem;
   font-weight: 500;
-  text-align: right;
-
+  text-align: center;
   &:last-child {
     padding-left: 20px;
   }
 
   @include media-mobile {
-    text-align: left;
     &:last-child {
       padding-left: 0;
     }

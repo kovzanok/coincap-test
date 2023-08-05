@@ -1,4 +1,8 @@
-import { calcColorChange, stringToFixed } from "../../utils";
+import {
+  calcColorChange,
+  shortenMillionNumber,
+  stringToFixed,
+} from "../../utils";
 import Button from "../Button";
 import Container from "../Container";
 import cls from "./Table.module.scss";
@@ -955,6 +959,7 @@ export default function Table() {
                 <th className={cls["head-cell"]}>Name</th>
                 <th className={cls["head-cell"]}>Price USD</th>
                 <th className={cls["head-cell"]}>24h %</th>
+                <th className={cls["head-cell"]}>VWAP</th>
                 <th className={cls["head-cell"]}>Market Cap USD</th>
                 <th className={cls["head-cell"]}>Volume(24h)</th>
                 <th className={cls["head-cell"]}>Supply</th>
@@ -975,6 +980,7 @@ export default function Table() {
                   marketCapUsd,
                   volumeUsd24Hr,
                   changePercent24Hr,
+                  vwap24Hr,
                 }) => (
                   <tr className={cls.row} key={id}>
                     <td className={cls.cell}>{rank}</td>
@@ -991,18 +997,18 @@ export default function Table() {
                     >
                       {stringToFixed(changePercent24Hr, 2)} %
                     </td>
+                    <td className={cls.cell}>{stringToFixed(vwap24Hr, 2)}</td>
                     <td className={cls.cell}>
-                      {stringToFixed(marketCapUsd, 2)} $
+                      {shortenMillionNumber(marketCapUsd)} $
                     </td>
                     <td className={cls.cell}>
-                      {stringToFixed(volumeUsd24Hr, 2)}
+                      {shortenMillionNumber(volumeUsd24Hr)} $
                     </td>
-                    <td className={cls.cell}>
-                      {stringToFixed(supply, 2)} {symbol}
-                    </td>
+
+                    <td className={cls.cell}>{shortenMillionNumber(supply)}</td>
                     <td className={cls.cell}>
                       {Number(maxSupply)
-                        ? `${stringToFixed(maxSupply, 2)} ${symbol}`
+                        ? `${shortenMillionNumber(maxSupply)} ${symbol}`
                         : "-"}
                     </td>
                     <td className={cls.cell}>
