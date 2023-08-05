@@ -51,13 +51,13 @@ export default function CryptoInfo() {
         <div>
           <div>
             {crypto.name}{" "}
-            <span className={cls["info__symbol"]}>{crypto.symbol}</span>
+            <span className={cls.symbol}>{crypto.symbol}</span>
           </div>
-          <div className={cls["info__price"]}>
+          <div className={cls.price}>
             ${stringToFixed(crypto.priceUsd, 2)}
           </div>
           <div
-            className={cls["info__change"]}
+            className={cls.change}
             style={{ color: calcColorChange(crypto.changePercent24Hr) }}
           >
             {stringToFixed(crypto.changePercent24Hr, 2)}% (24h)
