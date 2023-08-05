@@ -18,7 +18,7 @@ export default function CryptoInfo() {
   };
   return (
     <div className={cls.info}>
-      <div className={cls["info__primary"]}>
+      <div className={cls.primary}>
         <div>
           <div>
             {crypto.name}{" "}
@@ -36,24 +36,24 @@ export default function CryptoInfo() {
         </div>
         <Button>Add</Button>
       </div>
-      <div className={cls["info__row"]}>
-        <span className={cls["info__text"]}>VWAP</span>
+      <div className={cls.row}>
+        <span className={cls.text}>VWAP</span>
         {addComasToStr(stringToFixed(crypto.vwap24Hr, 2))}
       </div>
-      <div className={cls["info__row"]}>
-        <span className={cls["info__text"]}>Market cap</span> ${" "}
+      <div className={cls.row}>
+        <span className={cls.text}>Market cap</span> ${" "}
         {addComasToStr(stringToFixed(crypto.marketCapUsd, 2))}
       </div>
-      <div className={cls["info__row"]}>
-        <span className={cls["info__text"]}>Volume</span>${" "}
+      <div className={cls.row}>
+        <span className={cls.text}>Volume</span>${" "}
         {addComasToStr(stringToFixed(crypto.volumeUsd24Hr, 2))}
       </div>
-      <div className={cls["info__row"]}>
-        <span className={cls["info__text"]}>Supply</span>
+      <div className={cls.row}>
+        <span className={cls.text}>Supply</span>
         {addComasToStr(String(Number(crypto.supply)))} {crypto.symbol}
       </div>
-      <div className={cls["info__row"]}>
-        <span className={cls["info__text"]}>Max supply</span>
+      <div className={cls.row}>
+        <span className={cls.text}>Max supply</span>
         {addComasToStr(String(Number(crypto.maxSupply)))} {crypto.symbol}
       </div>
     </div>
