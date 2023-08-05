@@ -1,31 +1,17 @@
+import { useEffect, useState } from "react";
 import { calcBgChange, calcColorChange, stringToFixed } from "../../utils";
 import cls from "./PopularCryptoList.module.scss";
+import { ApiService } from "../../ApiService";
+import HorizontalLoader from "../HorizontalLoader";
 
 export default function PopularCryptoList() {
-  const popularCrypto: CryptoListType[] = [
-    {
-      id: "bitcoin",
-      name: "Bitcoin",
-      symbol: "BTC",
-      priceUsd: "6929.8217756835584756",
-      changePercent24Hr: "-0.81",
-    },
-    {
-      id: "ethereum",
-      symbol: "ETH",
-      name: "Ethereum",
-      priceUsd: "404.9774667045200896",
-      changePercent24Hr: "1.2",
-    },
-    {
-      id: "bitcoin",
-      name: "XRP",
-      symbol: "XRP",
-      priceUsd: "0.4202870472643482",
-      changePercent24Hr: "-0.2",
-    },
-  ];
+  const [popularCrypto, setPopularCrypto] = useState<CryptoType[]>([]);
 
+  useEffect(() => {
+    ApiService.getAllCrypto(0, 3).then(setPopularCrypto);
+  }, []);
+
+  if (popularCrypto.length === 0) return <HorizontalLoader />;
   return (
     <ul className={cls["list"]}>
       {popularCrypto.map(
@@ -41,7 +27,7 @@ export default function PopularCryptoList() {
             >
               <div>${stringToFixed(priceUsd, 3)}</div>
               <div style={{ color: calcColorChange(changePercent24Hr) }}>
-                {changePercent24Hr}%
+                {stringToFixed(changePercent24Hr, 3)}%
               </div>
             </div>
           </li>
