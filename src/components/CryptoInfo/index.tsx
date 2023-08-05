@@ -1,11 +1,40 @@
-import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { addComasToStr, calcColorChange, stringToFixed } from "../../utils";
 import AddModal from "../AddModal";
 import Button from "../Button";
 import cls from "./CryptoInfo.module.scss";
+import { ApiService } from "../../ApiService";
+import Loader from "../Loader";
+
+const initialState: CryptoType = {
+  id: "",
+  rank: "",
+  symbol: "",
+  name: "",
+  supply: "",
+  maxSupply: "",
+  marketCapUsd: "",
+  volumeUsd24Hr: "",
+  priceUsd: "",
+  changePercent24Hr: "",
+  vwap24Hr: "",
+};
 
 export default function CryptoInfo() {
+  const [crypto, setCrypto] = useState<CryptoType>(initialState);
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      ApiService.getCryptoById(id).then((res) => {
+        setCrypto(res);
+        setLoading(false);
+      });
+    }
+  }, [id]);
 
   const openModal = () => {
     setOpen(true);
@@ -15,19 +44,7 @@ export default function CryptoInfo() {
     setOpen(false);
   };
 
-  const crypto: CryptoType = {
-    id: "bitcoin",
-    rank: "1",
-    symbol: "BTC",
-    name: "Bitcoin",
-    supply: "17193925.0000000000000000",
-    maxSupply: "21000000.0000000000000000",
-    marketCapUsd: "119179791817.6740161068269075",
-    volumeUsd24Hr: "2928356777.6066665425687196",
-    priceUsd: "6931.5058555666618359",
-    changePercent24Hr: "-0.8101417214350335",
-    vwap24Hr: "7175.0663247679233209",
-  };
+  if (loading) return <Loader />;
   return (
     <div className={cls.info}>
       <div className={cls.primary}>
