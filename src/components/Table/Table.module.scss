@@ -16,10 +16,11 @@
 }
 
 .row {
+  cursor: pointer;
+  border-top: 1px solid black;
   &:first-of-type {
     border: none;
   }
-  border-top: 1px solid black;
 }
 
 .head-cell {

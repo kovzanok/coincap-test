@@ -6,8 +6,10 @@ import {
 import Button from "../Button";
 import Container from "../Container";
 import cls from "./Table.module.scss";
+import { useNavigate } from "react-router-dom";
 
 export default function Table() {
+  const navigate = useNavigate();
   const arr: CryptoType[] = [
     {
       id: "bitcoin",
@@ -982,7 +984,7 @@ export default function Table() {
                   changePercent24Hr,
                   vwap24Hr,
                 }) => (
-                  <tr className={cls.row} key={id}>
+                  <tr onClick={() => navigate(id)} className={cls.row} key={id}>
                     <td className={cls.cell}>{rank}</td>
                     <td className={cls.cell}>
                       {name}
