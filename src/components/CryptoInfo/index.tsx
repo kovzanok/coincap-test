@@ -34,7 +34,7 @@ export default function CryptoInfo() {
             {stringToFixed(crypto.changePercent24Hr, 2)}% (24h)
           </div>
         </div>
-        <Button>Add to portfolio</Button>
+        <Button>Add</Button>
       </div>
       <div className={cls["info__row"]}>
         <span className={cls["info__text"]}>VWAP</span>
