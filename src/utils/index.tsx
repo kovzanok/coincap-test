@@ -6,3 +6,47 @@ export const stringToFixed = (string: string | null, fixed: number): string => {
 export const calcColorChange = (str: string | null): "red" | "green" => {
   return Number(str) >= 0 ? "green" : "red";
 };
+
+export const calcBgChange = (
+  str: string | null
+): "rgb(255 0 0 / 40%)" | "rgb(0 255 0 / 40%)" => {
+  return Number(str) >= 0 ? "rgb(0 255 0 / 40%)" : "rgb(255 0 0 / 40%)";
+};
+
+export const addComasToStr = (str: string): string => {
+  let strToSeparate = "";
+  let endOfStr = "";
+  if (str.includes(".")) {
+    const dot = str.indexOf(".");
+    strToSeparate = str.slice(0, dot);
+    endOfStr = str.slice(dot);
+  } else {
+    strToSeparate = str;
+  }
+  const separatedArr = separateArr(strToSeparate);
+  return separatedArr.reverse().join("") + endOfStr;
+};
+
+const separateArr = (str: string): string[] =>
+  str
+    .split("")
+    .reverse()
+    .map((item, index) => {
+      if ((index + 1) % 3 === 0 && index + 1 !== str.length) {
+        return "," + item;
+      }
+      return item;
+    });
+
+export const shortenMillionNumber = (str: string | null): string => {
+  if (!str) return "-";
+  const integerPart = Number(str).toFixed(0);
+  switch (true) {
+    case integerPart.length > 9:
+      return integerPart.split("").reverse().slice(9).reverse().join("") + "B";
+    case integerPart.length > 6:
+      return integerPart.split("").reverse().slice(6).reverse().join("") + "M";
+    default:
+      return stringToFixed(str, 2);
+  }
+};
