@@ -81,11 +81,11 @@ export default function CryptoInfo() {
       </div>
       <div className={cls.row}>
         <span className={cls.text}>Supply</span>
-        {addComasToStr(String(Number(crypto.supply)))} {crypto.symbol}
+        {addComasToStr(stringToFixed(crypto.supply,2))} {crypto.symbol}
       </div>
       <div className={cls.row}>
         <span className={cls.text}>Max supply</span>
-        {addComasToStr(String(Number(crypto.maxSupply)))} {crypto.symbol}
+        {addComasToStr(stringToFixed(crypto.maxSupply,2))} {crypto.symbol}
       </div>
       <AddModal close={closeModal} {...crypto} opened={open} />
     </div>
