@@ -13,6 +13,7 @@
 
 .container {
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .row {
@@ -100,4 +101,14 @@
     padding-left: 10px;
     color: grey;
   }
+}
+
+.pagination {
+  border-top: 1px solid black;
+  padding-top: 20px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  column-gap: 20px;
 }
