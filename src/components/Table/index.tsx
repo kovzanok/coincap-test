@@ -964,15 +964,9 @@ export default function Table() {
     setCryptoData({ name, id, symbol });
   };
 
-  const closeModal: React.MouseEventHandler = (e) => {
-    const target = e.target;
-    if (
-      target instanceof HTMLElement &&
-      !target.className.includes("_modal__")
-    ) {
-      setOpen(false);
-      setCryptoData({ name: "", id: "", symbol: "" });
-    }
+  const closeModal = () => {
+    setOpen(false);
+    setCryptoData({ name: "", id: "", symbol: "" });
   };
 
   return (
