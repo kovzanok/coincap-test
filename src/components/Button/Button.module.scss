@@ -17,7 +17,15 @@ $primary-color: #7979f0;
     color: $primary-color;
   }
 
-  &:active {
+  &:active:not(&:disabled) {
     transform: scale(0.95);
+  }
+
+  &:disabled {
+    cursor: default;
+    transition: none;
+    color: rgb(202, 199, 199);
+    background-color: gray;
+    border: 1px solid gray;
   }
 }
