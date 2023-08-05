@@ -1,4 +1,4 @@
-import { calcColorChange, stringToFixed } from "../../utils";
+import { addComasToStr, calcColorChange, stringToFixed } from "../../utils";
 import Button from "../Button";
 import cls from "./CryptoInfo.module.scss";
 
@@ -37,20 +37,24 @@ export default function CryptoInfo() {
         <Button>Add to portfolio</Button>
       </div>
       <div className={cls["info__row"]}>
-        <span className={cls["info__text"]}>Market cap</span>{" "}
-        {stringToFixed(crypto.marketCapUsd, 2)}$
+        <span className={cls["info__text"]}>VWAP</span>
+        {addComasToStr(stringToFixed(crypto.vwap24Hr, 2))}
       </div>
       <div className={cls["info__row"]}>
-        <span className={cls["info__text"]}>Volume</span>{" "}
-        {stringToFixed(crypto.volumeUsd24Hr, 2)}$
+        <span className={cls["info__text"]}>Market cap</span> ${" "}
+        {addComasToStr(stringToFixed(crypto.marketCapUsd, 2))}
+      </div>
+      <div className={cls["info__row"]}>
+        <span className={cls["info__text"]}>Volume</span>${" "}
+        {addComasToStr(stringToFixed(crypto.volumeUsd24Hr, 2))}
       </div>
       <div className={cls["info__row"]}>
         <span className={cls["info__text"]}>Supply</span>
-        {Number(crypto.supply)} {crypto.symbol}
+        {addComasToStr(String(Number(crypto.supply)))} {crypto.symbol}
       </div>
       <div className={cls["info__row"]}>
-        <span className={cls["info__text"]}>Max supply</span>{" "}
-        {Number(crypto.maxSupply)} {crypto.symbol}
+        <span className={cls["info__text"]}>Max supply</span>
+        {addComasToStr(String(Number(crypto.maxSupply)))} {crypto.symbol}
       </div>
     </div>
   );
