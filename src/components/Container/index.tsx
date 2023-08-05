@@ -1,6 +1,14 @@
 import cls from "./Container.module.scss";
 import { PropsWithChildren } from "react";
 
-export default function Container({ children }: PropsWithChildren) {
-  return <div className={cls.container}>{children}</div>;
+type ContainerProps = {
+  className?: string;
+};
+
+export default function Container({
+  children,
+  className = "",
+}: PropsWithChildren<ContainerProps>) {
+  const classNames = `${className} ${cls.container}`.split(" ");
+  return <div className={classNames.join(" ")}>{children}</div>;
 }
