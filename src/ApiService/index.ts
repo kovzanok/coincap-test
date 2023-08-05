@@ -13,4 +13,11 @@ export class ApiService {
       await res.json();
     return data;
   }
+
+  static async getCryptoById(id: string): Promise<CryptoType> {
+    const url = new URL(`/v2/assets/${id}`, ApiService.BASE_URL);
+    const res = await fetch(url);
+    const { data }: { data: CryptoType; timestamp: number } = await res.json();
+    return data;
+  }
 }
