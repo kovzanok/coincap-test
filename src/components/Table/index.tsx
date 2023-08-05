@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from "react";
-import { pageContext } from "../../providers/PageProvider";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   calcColorChange,
+  getPageFromSearchParams,
   shortenMillionNumber,
   stringToFixed,
 } from "../../utils";
@@ -17,6 +18,9 @@ type CryptoData = Pick<CryptoType, "name" | "symbol" | "id">;
 
 export default function Table() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = getPageFromSearchParams(searchParams);
+
   const [open, setOpen] = useState(false);
   const [cryptoData, setCryptoData] = useState<CryptoData>({
     name: "",
@@ -25,7 +29,6 @@ export default function Table() {
   });
   const [cryptoArr, setCryptoArr] = useState<CryptoType[]>([]);
   const [loading, setLoading] = useState(true);
-  const { page, setPage } = useContext(pageContext);
 
   useEffect(() => {
     ApiService.getAllCrypto(page).then((res) => {
@@ -48,13 +51,12 @@ export default function Table() {
     <main>
       <Container className={cls.container}>
         <h1>Today's Cryptocurrency Prices</h1>
-        <div className={cls.wrapper}>
-          <table className={cls.table}>
-            {loading ? (
-              <Loader />
-            ) : (
-              <>
-                {" "}
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <div className={cls.wrapper}>
+              <table className={cls.table}>
                 <thead>
                   <tr className={cls.row}>
                     <th className={cls["head-cell"]}>#</th>
@@ -137,17 +139,28 @@ export default function Table() {
                     )
                   )}
                 </tbody>
-              </>
-            )}
-          </table>
-        </div>
-        <div className={cls.pagination}>
-          <Button onClick={() => setPage(page - 1)} disabled={page === 0}>
-            {"<"}
-          </Button>
-          Page#{page + 1}
-          <Button onClick={() => setPage(page + 1)}>{">"}</Button>
-        </div>
+              </table>
+            </div>
+            <div className={cls.pagination}>
+              <Button
+                onClick={() =>
+                  setSearchParams(new URLSearchParams(`page=${page}`))
+                }
+                disabled={page === 0}
+              >
+                {"<"}
+              </Button>
+              Page#{page + 1}
+              <Button
+                onClick={() =>
+                  setSearchParams(new URLSearchParams(`page=${page + 2}`))
+                }
+              >
+                {">"}
+              </Button>
+            </div>
+          </>
+        )}
       </Container>
       <AddModal close={closeModal} {...cryptoData} opened={open} />
     </main>

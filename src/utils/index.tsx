@@ -51,3 +51,9 @@ export const shortenMillionNumber = (str: string | null): string => {
       return stringToFixed(str, 2);
   }
 };
+
+export const getPageFromSearchParams = (searchParams: URLSearchParams) => {
+  const pageStr = searchParams.get("page");
+  if (!pageStr) return 0;
+  return Number(pageStr) - 1;
+};
