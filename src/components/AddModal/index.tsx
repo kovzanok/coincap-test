@@ -19,17 +19,17 @@ export default function AddModal({
   if (!opened) return null;
 
   return (
-    <div onClick={close} className={cls.modal}>
-      <div className={cls["modal__body"]}>
-        <h1 className={cls["modal__title"]}>Add {name} to portfolio</h1>
-        <form className={cls["modal__form"]}>
-          <label className={cls["modal__label"]}>
-            <input className={cls["modal__input"]} min={0} type='number' />
+    <div className={cls.modal}>
+      <div className={cls.body}>
+        <h1 className={cls.title}>Add {name} to portfolio</h1>
+        <form className={cls.form}>
+          <label className={cls.label}>
+            <input className={cls.input} min={0} type='number' />
             {symbol}
           </label>
           <Button>Add crypto</Button>
         </form>
-        <div className={cls["modal__button"]}>
+        <div className={cls.button}>
           <Button onClick={close}>Back</Button>
         </div>
       </div>
