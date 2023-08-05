@@ -1,5 +1,6 @@
 import { calcColorChange, stringToFixed } from "../../utils";
 import Button from "../Button";
+import Container from "../Container";
 import cls from "./Table.module.scss";
 
 export default function Table() {
@@ -943,68 +944,77 @@ export default function Table() {
   ];
 
   return (
-    <div className={cls.wrapper}>
-      <table className={cls.table}>
-        <thead>
-          <tr className={cls.row}>
-            <th className={cls["head-cell"]}>#</th>
-            <th className={cls["head-cell"]}>Name</th>
-            <th className={cls["head-cell"]}>Price USD</th>
-            <th className={cls["head-cell"]}>24h %</th>
-            <th className={cls["head-cell"]}>Market Cap USD</th>
-            <th className={cls["head-cell"]}>Volume(24h)</th>
-            <th className={cls["head-cell"]}>Supply</th>
-            <th className={cls["head-cell"]}>Max supply</th>
-            <th className={cls["head-cell"]}></th>
-          </tr>
-        </thead>
-        <tbody>
-          {arr.map(
-            ({
-              id,
-              symbol,
-              name,
-              rank,
-              priceUsd,
-              supply,
-              maxSupply,
-              marketCapUsd,
-              volumeUsd24Hr,
-              changePercent24Hr,
-            }) => (
-              <tr className={cls.row} key={id}>
-                <td className={cls.cell}>{rank}</td>
-                <td className={cls.cell}>
-                  {name}
-                  <span className={cls["cell__symbol"]}>{symbol}</span>
-                </td>
-                <td className={cls.cell}>{stringToFixed(priceUsd, 4)} $</td>
-                <td
-                  className={cls.cell}
-                  style={{
-                    color: calcColorChange(changePercent24Hr),
-                  }}
-                >
-                  {stringToFixed(changePercent24Hr, 2)} %
-                </td>
-                <td className={cls.cell}>{stringToFixed(marketCapUsd, 2)} $</td>
-                <td className={cls.cell}>{stringToFixed(volumeUsd24Hr, 2)}</td>
-                <td className={cls.cell}>
-                  {stringToFixed(supply, 2)} {symbol}
-                </td>
-                <td className={cls.cell}>
-                  {Number(maxSupply)
-                    ? `${stringToFixed(maxSupply, 2)} ${symbol}`
-                    : "-"}
-                </td>
-                <td className={cls.cell}>
-                  <Button>+</Button>
-                </td>
+    <main>
+      <Container className={cls.container}>
+        <h1>Today's Cryptocurrency Prices</h1>
+        <div className={cls.wrapper}>
+          <table className={cls.table}>
+            <thead>
+              <tr className={cls.row}>
+                <th className={cls["head-cell"]}>#</th>
+                <th className={cls["head-cell"]}>Name</th>
+                <th className={cls["head-cell"]}>Price USD</th>
+                <th className={cls["head-cell"]}>24h %</th>
+                <th className={cls["head-cell"]}>Market Cap USD</th>
+                <th className={cls["head-cell"]}>Volume(24h)</th>
+                <th className={cls["head-cell"]}>Supply</th>
+                <th className={cls["head-cell"]}>Max supply</th>
+                <th className={cls["head-cell"]}>Add</th>
               </tr>
-            )
-          )}
-        </tbody>
-      </table>
-    </div>
+            </thead>
+            <tbody>
+              {arr.map(
+                ({
+                  id,
+                  symbol,
+                  name,
+                  rank,
+                  priceUsd,
+                  supply,
+                  maxSupply,
+                  marketCapUsd,
+                  volumeUsd24Hr,
+                  changePercent24Hr,
+                }) => (
+                  <tr className={cls.row} key={id}>
+                    <td className={cls.cell}>{rank}</td>
+                    <td className={cls.cell}>
+                      {name}
+                      <span className={cls["cell__symbol"]}>{symbol}</span>
+                    </td>
+                    <td className={cls.cell}>{stringToFixed(priceUsd, 4)} $</td>
+                    <td
+                      className={cls.cell}
+                      style={{
+                        color: calcColorChange(changePercent24Hr),
+                      }}
+                    >
+                      {stringToFixed(changePercent24Hr, 2)} %
+                    </td>
+                    <td className={cls.cell}>
+                      {stringToFixed(marketCapUsd, 2)} $
+                    </td>
+                    <td className={cls.cell}>
+                      {stringToFixed(volumeUsd24Hr, 2)}
+                    </td>
+                    <td className={cls.cell}>
+                      {stringToFixed(supply, 2)} {symbol}
+                    </td>
+                    <td className={cls.cell}>
+                      {Number(maxSupply)
+                        ? `${stringToFixed(maxSupply, 2)} ${symbol}`
+                        : "-"}
+                    </td>
+                    <td className={cls.cell}>
+                      <Button>+</Button>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        </div>
+      </Container>
+    </main>
   );
 }
