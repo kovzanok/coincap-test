@@ -1,0 +1,61 @@
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba($color: #000000, $alpha: 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 30%;
+    min-width: 310px;
+    background-color: white;
+    border-radius: 20px;
+  }
+}
+
+.sum {
+  font-size: 2rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  row-gap: 10px;
+}
+
+.item {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background-color: rgb(178, 178, 243);
+  display: flex;
+}
+
+.info {
+  flex-basis: 30%;
+}
+
+.name,
+.amount {
+  color: white;
+}
+
+.price,
+.total {
+  color: rgb(0, 0, 0);
+}
