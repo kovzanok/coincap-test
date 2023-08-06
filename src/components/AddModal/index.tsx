@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import Button from "../Button";
 import cls from "./AddModal.module.scss";
 import { portfolioContext } from "../../providers/PorfolioProvider";
@@ -19,13 +19,12 @@ export default function AddModal({
   close,
 }: AddModalProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [error, setError] = useState("");
   const { portfolio, setPortfolio, setLastCrypto } =
     useContext(portfolioContext);
 
   const closeModal = () => {
     if (inputRef.current) inputRef.current.value = "";
-    setError("");
+    inputRef.current?.setCustomValidity("");
     close();
   };
 
