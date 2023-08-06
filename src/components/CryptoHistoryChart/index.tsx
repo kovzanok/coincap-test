@@ -17,6 +17,7 @@ import { stringToFixed } from "../../utils";
 
 export default function CryptoHistoryChart() {
   const [history, setHistory] = useState<CryptoHistoryTimeStamp[]>([]);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
   useFetching(
@@ -25,15 +26,17 @@ export default function CryptoHistoryChart() {
         return ApiService.getPriceHistoryById(id, signal);
       }
     },
-    setHistory,
+    (res: CryptoHistoryTimeStamp[]) => {
+      setHistory(res);
+      setLoading(false);
+    },
     [id]
   );
-  const priceArr = history.map((item) => Math.round(Number(item.priceUsd)));
 
   return (
     <div className={cls.chart}>
       <h2 className={cls.title}>Price history</h2>
-      {history.length === 0 ? (
+      {loading ? (
         <Loader />
       ) : (
         <ResponsiveContainer width='100%' height={300}>
