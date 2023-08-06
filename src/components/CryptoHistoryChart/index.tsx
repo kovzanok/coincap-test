@@ -39,10 +39,10 @@ export default function CryptoHistoryChart() {
         <ResponsiveContainer width='100%' height={300}>
           <LineChart
             margin={{ right: 0 }}
-            width={700}
+            width={1000}
             height={300}
             data={history.map(({ priceUsd, time }) => ({
-              price: stringToFixed(priceUsd, 2),
+              price: +stringToFixed(priceUsd, 3),
               time: new Date(time).toISOString().slice(0, 10),
             }))}
           >
@@ -50,8 +50,9 @@ export default function CryptoHistoryChart() {
             <XAxis tickMargin={10} minTickGap={40} dataKey='time' />
             <Tooltip />
             <YAxis
-              tickMargin={10}
-              domain={[Math.min(...priceArr), Math.max(...priceArr)]}
+              type='number'
+              domain={["dataMin", "dataMax"]}
+              tickMargin={1}
               unit='$'
             />
             <Line
