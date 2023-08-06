@@ -23,7 +23,7 @@
     background-color: white;
     border-radius: 20px;
     @include media-mobile {
-      padding: 5px;
+      padding: 15px 5px;
     }
   }
 }
@@ -37,7 +37,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   row-gap: 10px;
 }
 
@@ -51,6 +51,9 @@
   background-color: rgb(178, 178, 243);
   display: flex;
   column-gap: 20px;
+  @include media-desktop {
+    font-size: 1.4rem;
+  }
 }
 
 .info {
