@@ -19,7 +19,9 @@ export default function PortfolioModal({ toggleModal }: PorfolioModalProps) {
   const ids = portfolio.map(({ id }) => id);
 
   useFetching(
-    (signal) => ApiService.getAllCrypto({ signal, ids }),
+    (signal) => {
+      return ApiService.getAllCrypto({ signal, ids, limit: "max" });
+    },
     (res: CryptoType[]) => {
       setCrypto(
         res.map(({ name, symbol, priceUsd, id }) => {

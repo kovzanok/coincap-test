@@ -30,7 +30,7 @@ type AllCryptoRequestParams = {
   signal: AbortSignal;
   page?: number;
   ids?: string[];
-  limit?: number;
+  limit?: number | "max";
 };
 
 type PorfolioCryptoInfo = Pick<CryptoType, "name" | "symbol" | "priceUsd"> & PorfolioCrypto;
