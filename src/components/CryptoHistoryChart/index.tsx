@@ -33,6 +33,11 @@ export default function CryptoHistoryChart() {
     [id]
   );
 
+  const data = history.map(({ priceUsd, time }) => ({
+    price: Number(stringToFixed(priceUsd, 5)),
+    time: new Date(time).toISOString().slice(0, 10),
+  }));
+
   return (
     <div className={cls.chart}>
       <h2 className={cls.title}>Price history</h2>
@@ -44,25 +49,17 @@ export default function CryptoHistoryChart() {
             margin={{ right: 0 }}
             width={1000}
             height={300}
-            data={history.map(({ priceUsd, time }) => ({
-              price: +stringToFixed(priceUsd, 3),
-              time: new Date(time).toISOString().slice(0, 10),
-            }))}
+            data={data}
           >
-            <CartesianGrid strokeDasharray='3 3' />
+            <CartesianGrid/>
             <XAxis tickMargin={10} minTickGap={40} dataKey='time' />
             <Tooltip />
-            <YAxis
-              type='number'
-              domain={["dataMin", "dataMax"]}
-              tickMargin={1}
-              unit='$'
-            />
+            <YAxis type='number' unit='$' />
             <Line
               dot={false}
               type='monotone'
               dataKey='price'
-              stroke='#6868d9'
+              stroke='#7979f0'
             />
           </LineChart>
         </ResponsiveContainer>

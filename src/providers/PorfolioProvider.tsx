@@ -17,11 +17,11 @@ const portfolioStr = localStorage.getItem("portfolio");
 const lastCryptoStr = localStorage.getItem("lastCrypto");
 
 const initialPortfolio = portfolioStr
-  ? (JSON.parse(portfolioStr) as PorfolioCrypto[])
+  ? (JSON.parse(portfolioStr) as PortfolioCrypto[])
   : [];
 
 const initialLastCrypto = lastCryptoStr
-  ? (JSON.parse(lastCryptoStr) as PorfolioCrypto)
+  ? (JSON.parse(lastCryptoStr) as PortfolioCrypto)
   : { id: "", amount: 0 };
 
 const contextInitialValue: PortfolioContext = {
@@ -36,9 +36,9 @@ export const portfolioContext =
 
 export default function PortfolioProvider({ children }: PropsWithChildren) {
   const [portfolio, setPortfolio] =
-    useState<PorfolioCrypto[]>(initialPortfolio);
+    useState<PortfolioCrypto[]>(initialPortfolio);
   const [lastCrypto, setLastCrypto] =
-    useState<PorfolioCrypto>(initialLastCrypto);
+    useState<PortfolioCrypto>(initialLastCrypto);
   const { Provider } = portfolioContext;
   return (
     <Provider value={{ portfolio, setPortfolio, lastCrypto, setLastCrypto }}>

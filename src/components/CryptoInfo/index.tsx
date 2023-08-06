@@ -45,7 +45,7 @@ export default function CryptoInfo() {
     setOpen(true);
   };
 
-  const closeModal: React.MouseEventHandler = () => {
+  const closeModal = () => {
     setOpen(false);
   };
 
@@ -73,11 +73,11 @@ export default function CryptoInfo() {
         {addComasToStr(stringToFixed(crypto.vwap24Hr, 4))}
       </div>
       <div className={cls.row}>
-        <span className={cls.text}>Market cap</span> ${" "}
+        <span className={cls.text}>Market cap</span> $
         {addComasToStr(stringToFixed(crypto.marketCapUsd, 2))}
       </div>
       <div className={cls.row}>
-        <span className={cls.text}>Volume</span>${" "}
+        <span className={cls.text}>Volume</span>$
         {addComasToStr(stringToFixed(crypto.volumeUsd24Hr, 2))}
       </div>
       <div className={cls.row}>
@@ -88,7 +88,7 @@ export default function CryptoInfo() {
         <span className={cls.text}>Max supply</span>
         {addComasToStr(stringToFixed(crypto.maxSupply, 2))} {crypto.symbol}
       </div>
-      <AddModal close={closeModal} {...crypto} opened={open} />
+      {open && <AddModal close={closeModal} {...crypto} />}
     </>
   );
 

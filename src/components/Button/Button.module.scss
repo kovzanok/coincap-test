@@ -1,6 +1,5 @@
 @import "../../style/placeholders";
-
-$primary-color: #7979f0;
+@import "../../style/constants";
 
 .button {
   @extend %transition;

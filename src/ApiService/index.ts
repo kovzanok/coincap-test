@@ -9,11 +9,11 @@ export class ApiService {
     limit = ApiService.LIMIT,
   }: AllCryptoRequestParams): Promise<CryptoType[]> {
     const url = new URL("/v2/assets", ApiService.BASE_URL);
-    const searchParams = new URLSearchParams([
-      ["limit", String(limit)],
-      ["offset", `${limit * page}`],
-      ["ids", ids.toString()],
-    ]);
+    const searchParams = new URLSearchParams([["ids", ids.toString()]]);
+    if (limit !== "max") {
+      searchParams.append("limit", String(limit));
+      searchParams.append("offset", `${limit * page}`);
+    }
     const res = await fetch(`${url}?${searchParams.toString()}`, { signal });
     const { data }: { data: CryptoType[]; timestamp: number } =
       await res.json();
