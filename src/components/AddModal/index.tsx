@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Button from "../Button";
 import cls from "./AddModal.module.scss";
 import { portfolioContext } from "../../providers/PorfolioProvider";
@@ -18,34 +18,52 @@ export default function AddModal({
   opened,
   close,
 }: AddModalProps) {
-  const [value, setValue] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState("");
   const { portfolio, setPortfolio, setLastCrypto } =
     useContext(portfolioContext);
 
   const closeModal = () => {
-    setValue("");
+    if (inputRef.current) inputRef.current.value = "";
+    setError("");
     close();
+  };
+
+  const validateInput = () => {
+    const input = inputRef.current;
+    if (!input) return;
+    const value = input.value;
+    if (value.length === 0) {
+      input.setCustomValidity("Amount is required");
+    } else if (Number(value) <= 0) {
+      input.setCustomValidity("Amount must be greater than zero");
+    } else {
+      input.setCustomValidity("");
+    }
+    input.reportValidity();
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const addedCryptoIndex = portfolio.findIndex((item) => item.id === id);
-    if (addedCryptoIndex !== -1) {
-      const addedCrypto = portfolio[addedCryptoIndex];
-      setPortfolio([
-        ...portfolio.slice(0, addedCryptoIndex),
-        { id, amount: Number(value) + addedCrypto.amount },
-        ...portfolio.slice(addedCryptoIndex + 1),
-      ]);
-    } else {
-      setPortfolio([...portfolio, { id, amount: Number(value) }]);
+    validateInput();
+    const input = inputRef.current;
+    if (!input) return;
+    if (input.validity.valid) {
+      const value = input.value;
+      const addedCryptoIndex = portfolio.findIndex((item) => item.id === id);
+      if (addedCryptoIndex !== -1) {
+        const addedCrypto = portfolio[addedCryptoIndex];
+        setPortfolio([
+          ...portfolio.slice(0, addedCryptoIndex),
+          { id, amount: Number(value) + addedCrypto.amount },
+          ...portfolio.slice(addedCryptoIndex + 1),
+        ]);
+      } else {
+        setPortfolio([...portfolio, { id, amount: Number(value) }]);
+      }
+      setLastCrypto({ id, amount: Number(value) });
+      closeModal();
     }
-    setLastCrypto({ id, amount: Number(value) });
-    closeModal();
-  };
-
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setValue(e.target.value);
   };
 
   if (!opened) return null;
@@ -58,11 +76,10 @@ export default function AddModal({
           <label className={cls.label}>
             <input
               step='any'
+              onChange={validateInput}
               name='amount'
-              value={value}
-              onChange={handleChange}
+              ref={inputRef}
               className={cls.input}
-              min={0}
               type='number'
             />
             {symbol}
