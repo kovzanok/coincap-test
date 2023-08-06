@@ -146,18 +146,20 @@ export default function Table() {
             </div>
             <div className={cls.pagination}>
               <Button
-                onClick={() =>
-                  setSearchParams(new URLSearchParams(`page=${page}`))
-                }
+                onClick={() => {
+                  setLoading(true);
+                  setSearchParams(new URLSearchParams(`page=${page}`));
+                }}
                 disabled={page === 0}
               >
                 {"<"}
               </Button>
               Page#{page + 1}
               <Button
-                onClick={() =>
-                  setSearchParams(new URLSearchParams(`page=${page + 2}`))
-                }
+                onClick={() => {
+                  setLoading(true);
+                  setSearchParams(new URLSearchParams(`page=${page + 2}`));
+                }}
               >
                 {">"}
               </Button>
