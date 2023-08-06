@@ -32,3 +32,5 @@ type AllCryptoRequestParams = {
   ids?: string[];
   limit?: number;
 };
+
+type PorfolioCryptoInfo = Pick<CryptoType, "name" | "symbol" | "priceUsd"> & PorfolioCrypto;
