@@ -73,11 +73,11 @@ export default function CryptoInfo() {
         {addComasToStr(stringToFixed(crypto.vwap24Hr, 4))}
       </div>
       <div className={cls.row}>
-        <span className={cls.text}>Market cap</span> ${" "}
+        <span className={cls.text}>Market cap</span> $
         {addComasToStr(stringToFixed(crypto.marketCapUsd, 2))}
       </div>
       <div className={cls.row}>
-        <span className={cls.text}>Volume</span>${" "}
+        <span className={cls.text}>Volume</span>$
         {addComasToStr(stringToFixed(crypto.volumeUsd24Hr, 2))}
       </div>
       <div className={cls.row}>
