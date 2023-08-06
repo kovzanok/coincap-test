@@ -57,6 +57,7 @@ export default function AddModal({
         <form onSubmit={handleSubmit} className={cls.form}>
           <label className={cls.label}>
             <input
+              step='any'
               name='amount'
               value={value}
               onChange={handleChange}
