@@ -8,7 +8,7 @@ export const useFetching = (
 ) => {
   useEffect(() => {
     const controller = new AbortController();
-    fetchFn(controller.signal)?.then(callback);
+    fetchFn(controller.signal)?.then(callback).catch(console.log);
     return () => controller.abort();
   }, [...deps]);
 };
