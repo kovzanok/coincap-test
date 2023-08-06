@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Button from "../Button";
 import cls from "./PorfolioModal.module.scss";
 import { portfolioContext } from "../../providers/PorfolioProvider";
@@ -17,7 +17,12 @@ export default function PortfolioModal({ toggleModal }: PorfolioModalProps) {
   const { portfolio, setPortfolio } = useContext(portfolioContext);
 
   const ids = portfolio.map(({ id }) => id);
-
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
   useFetching(
     (signal) => {
       return ApiService.getAllCrypto({ signal, ids, limit: "max" });

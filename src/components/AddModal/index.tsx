@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, useEffect } from "react";
 import Button from "../Button";
 import cls from "./AddModal.module.scss";
 import { portfolioContext } from "../../providers/PorfolioProvider";
@@ -14,6 +14,12 @@ export default function AddModal({ name, symbol, id, close }: AddModalProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { portfolio, setPortfolio, setLastCrypto } =
     useContext(portfolioContext);
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   const closeModal = () => {
     if (inputRef.current) inputRef.current.value = "";
