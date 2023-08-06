@@ -11,8 +11,8 @@ type PortfolioModalProps = {
   toggleModal: () => void;
 };
 
-export default function PortfolioModal({ toggleModal }: PorfolioModalProps) {
-  const [crypto, setCrypto] = useState<PorfolioCryptoInfo[]>([]);
+export default function PortfolioModal({ toggleModal }: PortfolioModalProps) {
+  const [crypto, setCrypto] = useState<PortfolioCryptoInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const { portfolio, setPortfolio } = useContext(portfolioContext);
 
@@ -25,26 +25,32 @@ export default function PortfolioModal({ toggleModal }: PorfolioModalProps) {
   }, []);
   useFetching(
     (signal) => {
+      if (ids.length === 0) return Promise.resolve([]);
       return ApiService.getAllCrypto({ signal, ids, limit: "max" });
     },
     (res: CryptoType[]) => {
-      setCrypto(
-        res.map(({ name, symbol, priceUsd, id }) => {
-          const portfolioInfo = portfolio.find(
-            (item) => item.id === id
-          ) as PorfolioCrypto;
-          return {
-            name,
-            symbol,
-            priceUsd,
-            ...portfolioInfo,
-          };
-        })
-      );
+      setCrypto(res.map(getPortfolioCryptoInfo));
       setLoading(false);
     },
     [ids.length]
   );
+
+  function getPortfolioCryptoInfo({
+    name,
+    symbol,
+    priceUsd,
+    id,
+  }: CryptoType): PortfolioCryptoInfo {
+    const portfolioInfo = portfolio.find(
+      (item) => item.id === id
+    ) as PortfolioCrypto;
+    return {
+      name,
+      symbol,
+      priceUsd,
+      ...portfolioInfo,
+    };
+  }
 
   const sum = crypto.reduce(
     (sum, { priceUsd, amount }) => (sum += amount * Number(priceUsd)),
@@ -52,7 +58,6 @@ export default function PortfolioModal({ toggleModal }: PorfolioModalProps) {
   );
 
   const removeCrypto = (id: string) => {
-    console.log(id);
     setPortfolio(portfolio.filter((item) => item.id !== id));
     setLoading(true);
   };
@@ -68,35 +73,32 @@ export default function PortfolioModal({ toggleModal }: PorfolioModalProps) {
       <>
         <h2 className={cls.sum}>Total: ${sum.toFixed(3)}</h2>
         <ul className={cls.list}>
-          {crypto.map(({ name, symbol, priceUsd, amount, id }) => {
-            console.log(name, id);
-            return (
-              <li className={cls.item} key={id}>
-                <div className={cls.info}>
-                  <div className={cls.name}>{name}</div>
-                  <div className={cls.price}>${stringToFixed(priceUsd, 3)}</div>
+          {crypto.map(({ name, symbol, priceUsd, amount, id }) => (
+            <li className={cls.item} key={id}>
+              <div className={cls.info}>
+                <div className={cls.name}>{name}</div>
+                <div className={cls.price}>${stringToFixed(priceUsd, 3)}</div>
+              </div>
+              <div>
+                <div className={cls.amount}>
+                  {amount} {symbol}
                 </div>
-                <div>
-                  <div className={cls.amount}>
-                    {amount} {symbol}
-                  </div>
-                  <div className={cls.total}>
-                    ${stringToFixed(String(+priceUsd * amount), 3)}
-                  </div>
+                <div className={cls.total}>
+                  ${stringToFixed(String(+priceUsd * amount), 3)}
                 </div>
-                <Button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    removeCrypto(id);
-                  }}
-                  width='40px'
-                  height='40px'
-                >
-                  X
-                </Button>
-              </li>
-            );
-          })}
+              </div>
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeCrypto(id);
+                }}
+                width='40px'
+                height='40px'
+              >
+                X
+              </Button>
+            </li>
+          ))}
         </ul>
       </>
     );
