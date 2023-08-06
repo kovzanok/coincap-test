@@ -19,11 +19,16 @@ export default function Portfolio() {
     (res: CryptoType[]) => {
       setCrypto(
         portfolio.length
-          ? res.map(({ priceUsd, id }, idx) => ({
-              priceUsd,
-              id,
-              amount: portfolio[idx].amount,
-            }))
+          ? res.map(({ priceUsd, id }) => {
+              const portfolioInfo = portfolio.find(
+                (item) => item.id === id
+              ) as PorfolioCrypto;
+              return {
+                priceUsd,
+                id,
+                amount: portfolioInfo.amount,
+              };
+            })
           : []
       );
       setLoading(false);

@@ -23,7 +23,9 @@ export default function PortfolioModal({ toggleModal }: PorfolioModalProps) {
     (res: CryptoType[]) => {
       setCrypto(
         res.map(({ name, symbol, priceUsd, id }) => {
-          const portfolioInfo = portfolio.find((item) => item.id === id) as PorfolioCrypto;
+          const portfolioInfo = portfolio.find(
+            (item) => item.id === id
+          ) as PorfolioCrypto;
           return {
             name,
             symbol,
@@ -38,8 +40,7 @@ export default function PortfolioModal({ toggleModal }: PorfolioModalProps) {
   );
 
   const sum = crypto.reduce(
-    (sum, { priceUsd }, idx) =>
-      (sum += portfolio[idx]?.amount * Number(priceUsd)),
+    (sum, { priceUsd, amount }) => (sum += amount * Number(priceUsd)),
     0
   );
 
