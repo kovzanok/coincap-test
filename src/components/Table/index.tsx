@@ -167,7 +167,7 @@ export default function Table() {
           </>
         )}
       </Container>
-      <AddModal close={closeModal} {...cryptoData} opened={open} />
+      {open && <AddModal close={closeModal} {...cryptoData}/>}
     </main>
   );
 }

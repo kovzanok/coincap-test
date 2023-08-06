@@ -4,20 +4,13 @@ import cls from "./AddModal.module.scss";
 import { portfolioContext } from "../../providers/PorfolioProvider";
 
 type AddModalProps = {
-  opened: boolean;
   name: string;
   symbol: string;
   id: string;
   close: () => void;
 };
 
-export default function AddModal({
-  name,
-  symbol,
-  id,
-  opened,
-  close,
-}: AddModalProps) {
+export default function AddModal({ name, symbol, id, close }: AddModalProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { portfolio, setPortfolio, setLastCrypto } =
     useContext(portfolioContext);
@@ -64,8 +57,6 @@ export default function AddModal({
       closeModal();
     }
   };
-
-  if (!opened) return null;
 
   return (
     <div className={cls.modal}>
