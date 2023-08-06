@@ -1,8 +1,3 @@
-type CryptoListType = Pick<
-  CryptoType,
-  "name" | "symbol" | "priceUsd" | "id" | "changePercent24Hr"
->;
-
 type CryptoType = {
   id: string;
   rank: string;
@@ -22,7 +17,7 @@ type CryptoHistoryTimeStamp = {
   time: string;
 };
 
-type PorfolioCrypto = Pick<CryptoType, "id"> & {
+type PortfolioCrypto = Pick<CryptoType, "id"> & {
   amount: number;
 };
 
@@ -33,4 +28,5 @@ type AllCryptoRequestParams = {
   limit?: number | "max";
 };
 
-type PorfolioCryptoInfo = Pick<CryptoType, "name" | "symbol" | "priceUsd"> & PorfolioCrypto;
+type PortfolioCryptoInfo = Pick<CryptoType, "name" | "symbol" | "priceUsd"> &
+  PorfolioCrypto;

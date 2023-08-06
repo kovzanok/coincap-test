@@ -7,7 +7,7 @@ import { ApiService } from "../../ApiService";
 import { stringToFixed } from "../../utils";
 import Loader from "../Loader";
 
-type PorfolioModalProps = {
+type PortfolioModalProps = {
   toggleModal: () => void;
 };
 
