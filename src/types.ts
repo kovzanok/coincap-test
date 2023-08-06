@@ -18,10 +18,19 @@ type CryptoType = {
 };
 
 type CryptoHistoryTimeStamp = {
-  price: string;
+  priceUsd: string;
   time: string;
 };
 
-type PorfolioCrypto = Pick<CryptoType, "name" | "symbol" | "id"> & {
+type PorfolioCrypto = Pick<CryptoType, "id"> & {
   amount: number;
 };
+
+type AllCryptoRequestParams = {
+  signal: AbortSignal;
+  page?: number;
+  ids?: string[];
+  limit?: number;
+};
+
+type PorfolioCryptoInfo = Pick<CryptoType, "name" | "symbol" | "priceUsd"> & PorfolioCrypto;

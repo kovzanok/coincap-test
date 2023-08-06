@@ -14,6 +14,7 @@ export const calcBgChange = (
 };
 
 export const addComasToStr = (str: string): string => {
+  if (str === "0") return "-";
   let strToSeparate = "";
   let endOfStr = "";
   if (str.includes(".")) {
@@ -49,4 +50,10 @@ export const shortenMillionNumber = (str: string | null): string => {
     default:
       return stringToFixed(str, 2);
   }
+};
+
+export const getPageFromSearchParams = (searchParams: URLSearchParams) => {
+  const pageStr = searchParams.get("page");
+  if (!pageStr) return 0;
+  return Number(pageStr) - 1;
 };

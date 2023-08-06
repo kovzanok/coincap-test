@@ -1,22 +1,92 @@
+import { useContext, useRef } from "react";
 import Button from "../Button";
 import cls from "./AddModal.module.scss";
+import { portfolioContext } from "../../providers/PorfolioProvider";
 
-export default function AddModal() {
-  const name = "Bitcoin";
-  const symbol = "BTC";
+type AddModalProps = {
+  opened: boolean;
+  name: string;
+  symbol: string;
+  id: string;
+  close: () => void;
+};
+
+export default function AddModal({
+  name,
+  symbol,
+  id,
+  opened,
+  close,
+}: AddModalProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { portfolio, setPortfolio, setLastCrypto } =
+    useContext(portfolioContext);
+
+  const closeModal = () => {
+    if (inputRef.current) inputRef.current.value = "";
+    inputRef.current?.setCustomValidity("");
+    close();
+  };
+
+  const validateInput = () => {
+    const input = inputRef.current;
+    if (!input) return;
+    const value = input.value;
+    if (value.length === 0) {
+      input.setCustomValidity("Amount is required");
+    } else if (Number(value) <= 0) {
+      input.setCustomValidity("Amount must be greater than zero");
+    } else {
+      input.setCustomValidity("");
+    }
+    input.reportValidity();
+  };
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    validateInput();
+    const input = inputRef.current;
+    if (!input) return;
+    if (input.validity.valid) {
+      const value = input.value;
+      const addedCryptoIndex = portfolio.findIndex((item) => item.id === id);
+      if (addedCryptoIndex !== -1) {
+        const addedCrypto = portfolio[addedCryptoIndex];
+        setPortfolio([
+          ...portfolio.slice(0, addedCryptoIndex),
+          { id, amount: Number(value) + addedCrypto.amount },
+          ...portfolio.slice(addedCryptoIndex + 1),
+        ]);
+      } else {
+        setPortfolio([...portfolio, { id, amount: Number(value) }]);
+      }
+      setLastCrypto({ id, amount: Number(value) });
+      closeModal();
+    }
+  };
+
+  if (!opened) return null;
+
   return (
     <div className={cls.modal}>
-      <div className={cls["modal__body"]}>
-        <h1 className={cls["modal__title"]}>Add {name} to portfolio</h1>
-        <form className={cls["modal__form"]}>
-          <label className={cls["modal__label"]}>
-            <input className={cls["modal__input"]} min={0} type='number' />
+      <div className={cls.body}>
+        <h1 className={cls.title}>Add {name} to portfolio</h1>
+        <form onSubmit={handleSubmit} className={cls.form}>
+          <label className={cls.label}>
+            <input
+              step='any'
+              onChange={validateInput}
+              name='amount'
+              ref={inputRef}
+              className={cls.input}
+              type='number'
+            />
             {symbol}
           </label>
           <Button>Add crypto</Button>
         </form>
-        <div className={cls["modal__button"]}>
-          <Button>Back</Button>
+        <div className={cls.button}>
+          <Button onClick={closeModal}>Back</Button>
         </div>
       </div>
     </div>

@@ -10,10 +10,11 @@ export default function Button({
   children,
   width,
   height,
+  disabled,
   onClick,
 }: PropsWithChildren<ButtonProps>) {
   return (
-    <button style={{ width, height }} className={cls.button} onClick={onClick}>
+    <button disabled={disabled} style={{ width, height }} className={cls.button} onClick={onClick}>
       {children}
     </button>
   );

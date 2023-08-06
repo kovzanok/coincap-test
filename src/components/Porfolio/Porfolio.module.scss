@@ -3,6 +3,7 @@
 .portfolio {
   font-size: 1.7rem;
   text-wrap: nowrap;
+  cursor: pointer;
   @include media-mobile {
     font-size: 1.4rem;
   }
