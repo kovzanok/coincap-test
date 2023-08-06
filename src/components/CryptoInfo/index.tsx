@@ -49,9 +49,10 @@ export default function CryptoInfo() {
     setOpen(false);
   };
 
-  if (loading) return <Loader />;
-  return (
-    <div className={cls.info}>
+  const content = loading ? (
+    <Loader />
+  ) : (
+    <>
       <div className={cls.primary}>
         <div>
           <div>
@@ -62,7 +63,7 @@ export default function CryptoInfo() {
             className={cls.change}
             style={{ color: calcColorChange(crypto.changePercent24Hr) }}
           >
-            {stringToFixed(crypto.changePercent24Hr, 2)}% (24h)
+            {stringToFixed(crypto.changePercent24Hr, 4)}% (24h)
           </div>
         </div>
         <Button onClick={openModal}>Add</Button>
@@ -81,13 +82,15 @@ export default function CryptoInfo() {
       </div>
       <div className={cls.row}>
         <span className={cls.text}>Supply</span>
-        {addComasToStr(stringToFixed(crypto.supply,2))} {crypto.symbol}
+        {addComasToStr(stringToFixed(crypto.supply, 2))} {crypto.symbol}
       </div>
       <div className={cls.row}>
         <span className={cls.text}>Max supply</span>
-        {addComasToStr(stringToFixed(crypto.maxSupply,2))} {crypto.symbol}
+        {addComasToStr(stringToFixed(crypto.maxSupply, 2))} {crypto.symbol}
       </div>
       <AddModal close={closeModal} {...crypto} opened={open} />
-    </div>
+    </>
   );
+
+  return <div className={cls.info}>{content}</div>;
 }
