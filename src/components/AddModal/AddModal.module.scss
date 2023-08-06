@@ -19,7 +19,7 @@
   width: 30%;
   background-color: white;
   border-radius: 20px;
-  min-width: 300px;
+  min-width: 344px;
 }
 
 .title {
@@ -30,6 +30,7 @@
 .form {
   display: flex;
   justify-content: space-evenly;
+  column-gap: 20px;
 }
 
 .input {
