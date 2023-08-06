@@ -62,7 +62,7 @@ export default function CryptoHistoryChart() {
               dot={false}
               type='monotone'
               dataKey='price'
-              stroke='#6868d9'
+              stroke='#7979f0'
             />
           </LineChart>
         </ResponsiveContainer>

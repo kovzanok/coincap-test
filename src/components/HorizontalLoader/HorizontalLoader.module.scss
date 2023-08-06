@@ -1,10 +1,12 @@
+@import '../../style/constants';
+
 .loader {
   width: 32px;
   height: 32px;
   position: relative;
   left: calc(100% - 80%);
   border-radius: 50%;
-  color: #5f65c9;
+  color: $primary-color;
   animation: fill 1s ease-in infinite alternate;
 }
 .loader::before , .loader::after {
