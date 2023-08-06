@@ -22,12 +22,15 @@ export default function PortfolioModal({ toggleModal }: PorfolioModalProps) {
     (signal) => ApiService.getAllCrypto({ signal, ids }),
     (res: CryptoType[]) => {
       setCrypto(
-        res.map(({ name, symbol, priceUsd }, idx) => ({
-          name,
-          symbol,
-          priceUsd,
-          ...portfolio[idx],
-        }))
+        res.map(({ name, symbol, priceUsd, id }) => {
+          const portfolioInfo = portfolio.find((item) => item.id === id) as PorfolioCrypto;
+          return {
+            name,
+            symbol,
+            priceUsd,
+            ...portfolioInfo,
+          };
+        })
       );
       setLoading(false);
     },
@@ -41,6 +44,7 @@ export default function PortfolioModal({ toggleModal }: PorfolioModalProps) {
   );
 
   const removeCrypto = (id: string) => {
+    console.log(id);
     setPortfolio(portfolio.filter((item) => item.id !== id));
     setLoading(true);
   };
@@ -57,6 +61,7 @@ export default function PortfolioModal({ toggleModal }: PorfolioModalProps) {
         <h2 className={cls.sum}>Total: ${sum.toFixed(3)}</h2>
         <ul className={cls.list}>
           {crypto.map(({ name, symbol, priceUsd, amount, id }) => {
+            console.log(name, id);
             return (
               <li className={cls.item} key={id}>
                 <div className={cls.info}>
