@@ -45,22 +45,28 @@ export default function Portfolio() {
   const diff = (add * 100) / initialSum;
 
   const toggleModal = () => setOpen(!open);
-  if (loading) return <Loader width='20px' height='20px' />;
+
   return (
     <div onClick={toggleModal} className={cls.portfolio}>
-      <div className={cls.title}>Your portfolio</div>
-      {initialSum === 0 ? (
-        <>
-          <span className={cls.initial}>$ {sum.toFixed(2)}</span>
-        </>
+      {loading ? (
+        <Loader width='20px' height='20px' />
       ) : (
         <>
-          <span className={cls.initial}>$ {initialSum.toFixed(2)}</span> +{" "}
-          <span className={cls["portfolio__add"]}>{add.toFixed(4)}</span>{" "}
-          <span className={cls.diff}>{diff.toFixed(4)}%</span>
+          <div className={cls.title}>Your portfolio</div>
+          {initialSum === 0 ? (
+            <>
+              <span className={cls.initial}>$ {sum.toFixed(2)}</span>
+            </>
+          ) : (
+            <>
+              <span className={cls.initial}>$ {initialSum.toFixed(2)}</span> +{" "}
+              <span className={cls["portfolio__add"]}>{add.toFixed(4)}</span>{" "}
+              <span className={cls.diff}>({diff.toFixed(4)}%)</span>
+            </>
+          )}
+          {open && <PortfolioModal toggleModal={toggleModal} />}
         </>
       )}
-      {open && <PortfolioModal toggleModal={toggleModal} />}
     </div>
   );
 }
