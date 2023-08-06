@@ -1,5 +1,10 @@
 import cls from "./Loader.module.scss";
 
-export default function Loader() {
-  return <div className={cls.loader}></div>;
+type LoaderProps = {
+  width?: string;
+  height?: string;
+};
+
+export default function Loader({ width, height }: LoaderProps) {
+  return <div style={{ width, height }} className={cls.loader}></div>;
 }
