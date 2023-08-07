@@ -7,23 +7,10 @@ import cls from "./CryptoInfo.module.scss";
 import { ApiService } from "../../ApiService";
 import Loader from "../Loader";
 import { useFetching } from "../../hooks";
-
-const initialState: CryptoType = {
-  id: "",
-  rank: "",
-  symbol: "",
-  name: "",
-  supply: "",
-  maxSupply: "",
-  marketCapUsd: "",
-  volumeUsd24Hr: "",
-  priceUsd: "",
-  changePercent24Hr: "",
-  vwap24Hr: "",
-};
+import NotFound from "../NotFound";
 
 export default function CryptoInfo() {
-  const [crypto, setCrypto] = useState<CryptoType>(initialState);
+  const [crypto, setCrypto] = useState<CryptoType | null>(null);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const { id } = useParams();
@@ -49,10 +36,18 @@ export default function CryptoInfo() {
     setOpen(false);
   };
 
-  const content = loading ? (
-    <Loader />
-  ) : (
-    <>
+  if (loading)
+    return (
+      <div className={cls.loader}>
+        <Loader />
+      </div>
+    );
+
+  if (!crypto) return <NotFound id={id} />;
+
+  return (
+    <div className={cls.info}>
+      {" "}
       <div className={cls.primary}>
         <div>
           <div>
@@ -89,8 +84,6 @@ export default function CryptoInfo() {
         {addComasToStr(stringToFixed(crypto.maxSupply, 2))} {crypto.symbol}
       </div>
       {open && <AddModal close={closeModal} {...crypto} />}
-    </>
+    </div>
   );
-
-  return <div className={cls.info}>{content}</div>;
 }
