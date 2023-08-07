@@ -45,12 +45,6 @@
     -webkit-appearance: none;
     margin: 0;
   }
-
-  &:invalid,
-  &:invalid:active {
-    border: 1px solid red;
-    outline: 1px solid red;
-  }
 }
 
 .label {
