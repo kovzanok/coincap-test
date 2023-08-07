@@ -108,7 +108,7 @@ export default function PortfolioModal({ toggleModal }: PortfolioModalProps) {
     <div className={cls.modal}>
       <div className={cls["modal__body"]}>
         {content}
-        <Button onClick={toggleModal}>Back</Button>
+        <Button width="80px" height="40px" onClick={toggleModal}>Back</Button>
       </div>
     </div>
   );
