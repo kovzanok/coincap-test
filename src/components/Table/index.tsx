@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import cls from "./Table.module.scss";
 import {
   calcColorChange,
+  formatCryptoData,
   getPageFromSearchParams,
   shortenMillionNumber,
-  stringToFixed,
 } from "../../utils";
 import Button from "../Button";
 import Container from "../Container";
@@ -31,7 +31,7 @@ export default function Table() {
   const [loading, setLoading] = useState(true);
 
   useFetching(
-    (signal) => ApiService.getAllCrypto({page, signal}),
+    (signal) => ApiService.getAllCrypto({ page, signal }),
     (res) => {
       setCryptoArr(res);
       setLoading(false);
@@ -89,16 +89,16 @@ export default function Table() {
                     {name}
                     <span className={cls["cell__symbol"]}>{symbol}</span>
                   </td>
-                  <td className={cls.cell}>{stringToFixed(priceUsd, 6)}$</td>
+                  <td className={cls.cell}>{formatCryptoData(priceUsd)}$</td>
                   <td
                     className={cls.cell}
                     style={{
                       color: calcColorChange(changePercent24Hr),
                     }}
                   >
-                    {stringToFixed(changePercent24Hr, 2)}%
+                    {formatCryptoData(changePercent24Hr)}%
                   </td>
-                  <td className={cls.cell}>{stringToFixed(vwap24Hr, 2)}</td>
+                  <td className={cls.cell}>{formatCryptoData(vwap24Hr)}</td>
                   <td className={cls.cell}>
                     {shortenMillionNumber(marketCapUsd)}$
                   </td>
@@ -106,7 +106,9 @@ export default function Table() {
                     {shortenMillionNumber(volumeUsd24Hr)}$
                   </td>
 
-                  <td className={cls.cell}>{shortenMillionNumber(supply)} {symbol}</td>
+                  <td className={cls.cell}>
+                    {shortenMillionNumber(supply)} {symbol}
+                  </td>
                   <td className={cls.cell}>
                     {Number(maxSupply)
                       ? `${shortenMillionNumber(maxSupply)} ${symbol}`
@@ -157,7 +159,7 @@ export default function Table() {
         <h1>Today's Cryptocurrency Prices</h1>
         {content}
       </Container>
-      {open && <AddModal close={closeModal} {...cryptoData}/>}
+      {open && <AddModal close={closeModal} {...cryptoData} />}
     </main>
   );
 }

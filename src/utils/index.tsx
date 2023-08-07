@@ -14,6 +14,7 @@ export const calcBgChange = (
 };
 
 export const addComasToStr = (str: string): string => {
+  if (str[0]==='0') return str;
   if (str === "0") return "-";
   let strToSeparate = "";
   let endOfStr = "";
@@ -39,16 +40,20 @@ const separateArr = (str: string): string[] =>
       return item;
     });
 
-export const shortenMillionNumber = (str: string | null): string => {
+export const shortenMillionNumber = (
+  str: string | null,
+): string => {
   if (!str) return "-";
   const integerPart = Number(str).toFixed(0);
   switch (true) {
+    case integerPart.length > 12:
+      return integerPart.split("").reverse().slice(12).reverse().join("") + "T";
     case integerPart.length > 9:
       return integerPart.split("").reverse().slice(9).reverse().join("") + "B";
     case integerPart.length > 6:
       return integerPart.split("").reverse().slice(6).reverse().join("") + "M";
     default:
-      return stringToFixed(str, 2);
+      return formatCryptoData(str);
   }
 };
 
@@ -56,4 +61,24 @@ export const getPageFromSearchParams = (searchParams: URLSearchParams) => {
   const pageStr = searchParams.get("page");
   if (!pageStr) return 0;
   return Number(pageStr) - 1;
+};
+
+export const formatCryptoData = (price: string | null): string => {
+  if (!price) return "-";
+  const dotIndex = price.indexOf(".");
+  const integerPart = Number(price).toFixed(0);
+  const fractialPart = price.slice(dotIndex + 1);
+  if (
+    fractialPart[1] !== "0" ||
+    fractialPart[0] !== "0" ||
+    integerPart !== "0"
+  ) {
+    return stringToFixed(price, 2);
+  }
+  let fixedNum = 0;
+  for (const num of fractialPart) {
+    fixedNum += 1;
+    if (num !== "0") break;
+  }
+  return stringToFixed(price, fixedNum);
 };
