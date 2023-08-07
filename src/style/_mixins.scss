@@ -29,3 +29,9 @@
     @content;
   }
 }
+
+@mixin media-small-mobile {
+  @media (max-width: $small-mobile-width) {
+    @content;
+  }
+}
