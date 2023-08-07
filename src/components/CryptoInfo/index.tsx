@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { addComasToStr, calcColorChange, stringToFixed } from "../../utils";
+import { addComasToStr, calcColorChange, formatCryptoData } from "../../utils";
 import AddModal from "../AddModal";
 import Button from "../Button";
 import cls from "./CryptoInfo.module.scss";
@@ -53,35 +53,39 @@ export default function CryptoInfo() {
           <div>
             {crypto.name} <span className={cls.symbol}>{crypto.symbol}</span>
           </div>
-          <div className={cls.price}>${stringToFixed(crypto.priceUsd, 4)}</div>
+          <div className={cls.price}>${formatCryptoData(crypto.priceUsd)}</div>
           <div
             className={cls.change}
             style={{ color: calcColorChange(crypto.changePercent24Hr) }}
           >
-            {stringToFixed(crypto.changePercent24Hr, 4)}% (24h)
+            {formatCryptoData(crypto.changePercent24Hr)}% (24h)
           </div>
         </div>
-        <Button onClick={openModal}>Add</Button>
+        <Button width='170px' height='50px' onClick={openModal}>
+          Add to portfolio
+        </Button>
       </div>
-      <div className={cls.row}>
-        <span className={cls.text}>VWAP</span>
-        {addComasToStr(stringToFixed(crypto.vwap24Hr, 4))}
-      </div>
-      <div className={cls.row}>
-        <span className={cls.text}>Market cap</span> $
-        {addComasToStr(stringToFixed(crypto.marketCapUsd, 2))}
-      </div>
-      <div className={cls.row}>
-        <span className={cls.text}>Volume</span>$
-        {addComasToStr(stringToFixed(crypto.volumeUsd24Hr, 2))}
-      </div>
-      <div className={cls.row}>
-        <span className={cls.text}>Supply</span>
-        {addComasToStr(stringToFixed(crypto.supply, 2))} {crypto.symbol}
-      </div>
-      <div className={cls.row}>
-        <span className={cls.text}>Max supply</span>
-        {addComasToStr(stringToFixed(crypto.maxSupply, 2))} {crypto.symbol}
+      <div className={cls.secondary}>
+        <div className={cls.row}>
+          <span className={cls.text}>VWAP</span>
+          {addComasToStr(formatCryptoData(crypto.vwap24Hr))}
+        </div>
+        <div className={cls.row}>
+          <span className={cls.text}>Market cap</span> $
+          {addComasToStr(formatCryptoData(crypto.marketCapUsd))}
+        </div>
+        <div className={cls.row}>
+          <span className={cls.text}>Volume</span>$
+          {addComasToStr(formatCryptoData(crypto.volumeUsd24Hr))}
+        </div>
+        <div className={cls.row}>
+          <span className={cls.text}>Supply</span>
+          {addComasToStr(formatCryptoData(crypto.supply))} {crypto.symbol}
+        </div>
+        <div className={cls.row}>
+          <span className={cls.text}>Max supply</span>
+          {addComasToStr(formatCryptoData(crypto.maxSupply))} {crypto.symbol}
+        </div>
       </div>
       {open && <AddModal close={closeModal} {...crypto} />}
     </div>
