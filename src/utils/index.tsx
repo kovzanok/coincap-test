@@ -57,3 +57,23 @@ export const getPageFromSearchParams = (searchParams: URLSearchParams) => {
   if (!pageStr) return 0;
   return Number(pageStr) - 1;
 };
+
+export const formatCryptoData = (price: string | null): string => {
+  if (!price) return "-";
+  const dotIndex = price.indexOf(".");
+  const integerPart = Number(price).toFixed(0);
+  const fractialPart = price.slice(dotIndex + 1);
+  if (
+    fractialPart[1] !== "0" ||
+    fractialPart[0] !== "0" ||
+    integerPart !== "0"
+  ) {
+    return stringToFixed(price, 2);
+  }
+  let fixedNum = 0;
+  for (const num of fractialPart) {
+    fixedNum += 1;
+    if (num !== "0") break;
+  }
+  return stringToFixed(price, fixedNum);
+};
