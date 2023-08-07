@@ -52,7 +52,7 @@ export default function AddModal({ name, symbol, id, close }: AddModalProps) {
             <input
               required
               min={0.0001}
-              max={10000}
+              max={1000}
               step='0.0001'
               value={value}
               onChange={(e) => setValue(e.target.value)}
