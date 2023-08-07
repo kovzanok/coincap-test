@@ -14,6 +14,7 @@ export const calcBgChange = (
 };
 
 export const addComasToStr = (str: string): string => {
+  if (str[0]==='0') return str;
   if (str === "0") return "-";
   let strToSeparate = "";
   let endOfStr = "";
