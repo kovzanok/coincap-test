@@ -5,6 +5,7 @@ import { useFetching } from "../../hooks";
 import { ApiService } from "../../ApiService";
 import PortfolioModal from "../PortfolioModal";
 import Loader from "../Loader";
+import { shortenMillionNumber } from "../../utils";
 
 type PorfolioCryptoCostInfo = { amount: number } & Pick<
   CryptoType,
@@ -62,13 +63,16 @@ export default function Portfolio() {
   const content = (
     <>
       <div className={cls.title}>Your portfolio</div>
-      {initialSum === 0 ? (
-        <span className={cls.initial}>${sum.toFixed(2)}</span>
-      ) : (
+      <span className={cls.initial}>${shortenMillionNumber(String(sum))}</span>
+      {initialSum !== 0 && (
         <>
-          <span className={cls.initial}>${initialSum.toFixed(2)}</span> +{" "}
-          <span className={cls["portfolio__add"]}>{add.toFixed(4)}</span>{" "}
-          <span className={cls.diff}>({diff.toFixed(4)}%)</span>
+          {"+ "}
+          <span className={cls["portfolio__add"]}>
+            {shortenMillionNumber(String(add))}
+          </span>{" "}
+          <span className={cls.diff}>
+            ({shortenMillionNumber(String(diff))}%)
+          </span>
         </>
       )}
     </>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFetching } from "../../hooks";
-import { calcBgChange, calcColorChange, stringToFixed } from "../../utils";
+import { calcBgChange, calcColorChange, formatCryptoData } from "../../utils";
 import cls from "./PopularCryptoList.module.scss";
 import { ApiService } from "../../ApiService";
 import HorizontalLoader from "../HorizontalLoader";
@@ -28,9 +28,9 @@ export default function PopularCryptoList() {
               }}
               className={cls["list__money"]}
             >
-              <div>${stringToFixed(priceUsd, 3)}</div>
+              <div>${formatCryptoData(priceUsd)}</div>
               <div style={{ color: calcColorChange(changePercent24Hr) }}>
-                {stringToFixed(changePercent24Hr, 3)}%
+                {formatCryptoData(changePercent24Hr)}%
               </div>
             </div>
           </li>

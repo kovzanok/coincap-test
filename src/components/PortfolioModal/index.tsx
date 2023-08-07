@@ -4,7 +4,7 @@ import cls from "./PorfolioModal.module.scss";
 import { portfolioContext } from "../../providers/PorfolioProvider";
 import { useFetching } from "../../hooks";
 import { ApiService } from "../../ApiService";
-import { stringToFixed } from "../../utils";
+import { formatCryptoData } from "../../utils";
 import Loader from "../Loader";
 
 type PortfolioModalProps = {
@@ -71,20 +71,20 @@ export default function PortfolioModal({ toggleModal }: PortfolioModalProps) {
   } else {
     content = (
       <>
-        <h2 className={cls.sum}>Total: ${sum.toFixed(3)}</h2>
+        <h2 className={cls.sum}>Total: ${formatCryptoData(String(sum))}</h2>
         <ul className={cls.list}>
           {crypto.map(({ name, symbol, priceUsd, amount, id }) => (
             <li className={cls.item} key={id}>
               <div className={cls.info}>
                 <div className={cls.name}>{name}</div>
-                <div className={cls.price}>${stringToFixed(priceUsd, 3)}</div>
+                <div className={cls.price}>${formatCryptoData(priceUsd)}</div>
               </div>
               <div>
                 <div className={cls.amount}>
                   {amount} {symbol}
                 </div>
                 <div className={cls.total}>
-                  ${stringToFixed(String(+priceUsd * amount), 3)}
+                  ${formatCryptoData(String(+priceUsd * amount))}
                 </div>
               </div>
               <Button
