@@ -60,7 +60,7 @@ export default function AddModal({ name, symbol, id, close }: AddModalProps) {
               className={cls.input}
               type='number'
             />
-            {symbol}
+            <span className={cls.symbol}>{symbol}</span>
           </label>
           <Button>Add crypto</Button>
         </form>
