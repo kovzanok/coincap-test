@@ -39,16 +39,20 @@ const separateArr = (str: string): string[] =>
       return item;
     });
 
-export const shortenMillionNumber = (str: string | null): string => {
+export const shortenMillionNumber = (
+  str: string | null,
+): string => {
   if (!str) return "-";
   const integerPart = Number(str).toFixed(0);
   switch (true) {
+    case integerPart.length > 12:
+      return integerPart.split("").reverse().slice(12).reverse().join("") + "T";
     case integerPart.length > 9:
       return integerPart.split("").reverse().slice(9).reverse().join("") + "B";
     case integerPart.length > 6:
       return integerPart.split("").reverse().slice(6).reverse().join("") + "M";
     default:
-      return stringToFixed(str, 2);
+      return formatCryptoData(str);
   }
 };
 
