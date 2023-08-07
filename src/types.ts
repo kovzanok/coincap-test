@@ -29,4 +29,4 @@ type AllCryptoRequestParams = {
 };
 
 type PortfolioCryptoInfo = Pick<CryptoType, "name" | "symbol" | "priceUsd"> &
-  PorfolioCrypto;
+  PortfolioCrypto;

@@ -7,10 +7,10 @@ import {
 } from "react";
 
 type PortfolioContext = {
-  portfolio: PorfolioCrypto[];
-  lastCrypto: PorfolioCrypto;
-  setPortfolio: Dispatch<SetStateAction<PorfolioCrypto[]>>;
-  setLastCrypto: Dispatch<SetStateAction<PorfolioCrypto>>;
+  portfolio: PortfolioCrypto[];
+  lastCrypto: PortfolioCrypto;
+  setPortfolio: Dispatch<SetStateAction<PortfolioCrypto[]>>;
+  setLastCrypto: Dispatch<SetStateAction<PortfolioCrypto>>;
 };
 
 const portfolioStr = localStorage.getItem("portfolio");
