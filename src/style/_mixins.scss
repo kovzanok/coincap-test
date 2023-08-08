@@ -6,12 +6,6 @@
   }
 }
 
-@mixin media-table-breakpoint {
-  @media (max-width: $table-breakpoint) {
-    @content;
-  }
-}
-
 @mixin media-crypto-layout-breakpoint {
   @media (max-width: $crypto-layout-breakpoint) {
     @content;
@@ -24,8 +18,20 @@
   }
 }
 
+@mixin media-table-breakpoint {
+  @media (max-width: $table-breakpoint) {
+    @content;
+  }
+}
+
 @mixin media-chart-breakpoint {
   @media (max-width: $chart-breakpoint) {
+    @content;
+  }
+}
+
+@mixin media-pre-mobile {
+  @media (max-width: $pre-mobile-width) {
     @content;
   }
 }
