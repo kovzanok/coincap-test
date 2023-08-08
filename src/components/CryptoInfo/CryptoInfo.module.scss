@@ -18,7 +18,6 @@
     font-size: 3rem;
   }
   @include media-tablet {
-    font-size: 2rem;
     padding: 10px;
     min-width: 310px;
   }
@@ -44,6 +43,9 @@
   display: flex;
   flex-direction: column;
   row-gap: 5px;
+  @include media-tablet {
+    font-size: 2rem;
+  }
 }
 
 .symbol {
