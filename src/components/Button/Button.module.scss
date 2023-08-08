@@ -4,13 +4,16 @@
 .button {
   @extend %transition;
   background-color: $primary-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid $primary-color;
   color: white;
   font-size: 2rem;
   padding: 5px 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
-
+  margin: auto;
   &:hover {
     background-color: rgb(255, 255, 255);
     color: $primary-color;

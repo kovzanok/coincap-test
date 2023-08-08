@@ -1,12 +1,19 @@
+@import "../../style/mixins";
 $symbol-color: grey;
 
 .list {
   display: flex;
   align-items: center;
-  column-gap: 20px;
+  justify-content: space-evenly;
+  column-gap: 10px;
+  row-gap: 5px;
+  flex-wrap: wrap;
   padding-bottom: 8px;
-  overflow: auto;
   font-size: 1.5rem;
+  @include media-mobile {
+    flex: 1;
+    font-size: 1.2rem;
+  }
   &__item {
     display: flex;
     column-gap: 5px;
