@@ -52,84 +52,84 @@ export default function Table() {
     <Loader />
   ) : (
     <>
-      <div className={cls.wrapper}>
-        <table className={cls.table}>
-          <thead>
-            <tr className={cls.row}>
-              <th className={cls["head-cell"]}>#</th>
-              <th className={cls["head-cell"]}>Name</th>
-              <th className={cls["head-cell"]}>Price USD</th>
-              <th className={cls["head-cell"]}>24h %</th>
-              <th className={cls["head-cell"]}>VWAP</th>
-              <th className={cls["head-cell"]}>Market Cap USD</th>
-              <th className={cls["head-cell"]}>Volume(24h)</th>
-              <th className={cls["head-cell"]}>Supply</th>
-              <th className={cls["head-cell"]}>Max supply</th>
-              <th className={cls["head-cell"]}>Add</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cryptoArr.map(
-              ({
-                id,
-                symbol,
-                name,
-                rank,
-                priceUsd,
-                supply,
-                maxSupply,
-                marketCapUsd,
-                volumeUsd24Hr,
-                changePercent24Hr,
-                vwap24Hr,
-              }) => (
-                <tr onClick={() => navigate(id)} className={cls.row} key={id}>
-                  <td className={cls.cell}>{rank}</td>
-                  <td className={cls.cell}>
-                    {name}
-                    <span className={cls["cell__symbol"]}>{symbol}</span>
-                  </td>
-                  <td className={cls.cell}>{formatCryptoData(priceUsd)}$</td>
-                  <td
-                    className={cls.cell}
-                    style={{
-                      color: calcColorChange(changePercent24Hr),
+      <table className={cls.table}>
+        <thead>
+          <tr className={cls.row}>
+            <th className={cls["head-cell"]}>#</th>
+            <th className={cls["head-cell"]}>Name</th>
+            <th className={cls["head-cell"]}>Price USD</th>
+            <th className={cls["head-cell"]}>24h %</th>
+            <th className={cls["head-cell"]}>VWAP</th>
+            <th className={cls["head-cell"]}>Market Cap USD</th>
+            <th className={cls["head-cell"]}>Volume(24h)</th>
+            <th className={cls["head-cell"]}>Supply</th>
+            <th className={cls["head-cell"]}>Max supply</th>
+            <th className={cls["head-cell"]}>Add</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cryptoArr.map(
+            ({
+              id,
+              symbol,
+              name,
+              rank,
+              priceUsd,
+              supply,
+              maxSupply,
+              marketCapUsd,
+              volumeUsd24Hr,
+              changePercent24Hr,
+              vwap24Hr,
+            }) => (
+              <tr onClick={() => navigate(id)} className={cls.row} key={id}>
+                <td className={cls.cell}>{rank}</td>
+                <td className={cls.cell}>
+                  {name}
+                  <span className={cls["cell__symbol"]}>{symbol}</span>
+                </td>
+                <td className={cls.cell}>{formatCryptoData(priceUsd)}$</td>
+                <td
+                  className={cls.cell}
+                  style={{
+                    color: calcColorChange(changePercent24Hr),
+                  }}
+                >
+                  {formatCryptoData(changePercent24Hr)}%
+                </td>
+                <td className={cls.cell}>{formatCryptoData(vwap24Hr)}</td>
+                <td className={cls.cell}>
+                  {shortenMillionNumber(marketCapUsd)}$
+                </td>
+                <td className={cls.cell}>
+                  {shortenMillionNumber(volumeUsd24Hr)}$
+                </td>
+
+                <td className={cls.cell}>
+                  {shortenMillionNumber(supply)} {symbol}
+                </td>
+                <td className={cls.cell}>
+                  {Number(maxSupply)
+                    ? `${shortenMillionNumber(maxSupply)} ${symbol}`
+                    : "-"}
+                </td>
+                <td className={cls.cell}>
+                  <Button
+                    width="1px"
+                    height="20px"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openModal({ name, symbol, id });
                     }}
                   >
-                    {formatCryptoData(changePercent24Hr)}%
-                  </td>
-                  <td className={cls.cell}>{formatCryptoData(vwap24Hr)}</td>
-                  <td className={cls.cell}>
-                    {shortenMillionNumber(marketCapUsd)}$
-                  </td>
-                  <td className={cls.cell}>
-                    {shortenMillionNumber(volumeUsd24Hr)}$
-                  </td>
-
-                  <td className={cls.cell}>
-                    {shortenMillionNumber(supply)} {symbol}
-                  </td>
-                  <td className={cls.cell}>
-                    {Number(maxSupply)
-                      ? `${shortenMillionNumber(maxSupply)} ${symbol}`
-                      : "-"}
-                  </td>
-                  <td className={cls.cell}>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openModal({ name, symbol, id });
-                      }}
-                    >
-                      +
-                    </Button>
-                  </td>
-                </tr>
-              )
-            )}
-          </tbody>
-        </table>
-      </div>
+                    +
+                  </Button>
+                </td>
+              </tr>
+            )
+          )}
+        </tbody>
+      </table>
       <div className={cls.pagination}>
         <Button
           onClick={() => {
