@@ -19,7 +19,7 @@ export default function Layout() {
         if (crypto) return { ...crypto, priceUsd };
       });
       window.onunload = () => {
-        localStorage.setItem("portfolio", JSON.stringify(newPortfolioToSave));
+        localStorage.setItem("coincap-portfolio", JSON.stringify(newPortfolioToSave));
       };
     },
     [portfolio]
