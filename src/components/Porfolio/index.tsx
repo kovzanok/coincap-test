@@ -5,15 +5,14 @@ import { useFetching } from "../../hooks";
 import { ApiService } from "../../ApiService";
 import PortfolioModal from "../PortfolioModal";
 import Loader from "../Loader";
-import { shortenMillionNumber } from "../../utils";
-
-type PorfolioCryptoCostInfo = { amount: number } & Pick<
-  CryptoType,
-  "priceUsd" | "id"
->;
+import {
+  calcColorChange,
+  getPorfolioSum,
+  shortenMillionNumber,
+} from "../../utils";
 
 export default function Portfolio() {
-  const { portfolio, lastCrypto } = useContext(portfolioContext);
+  const { portfolio } = useContext(portfolioContext);
   const ids = portfolio.map(({ id }) => id);
   const [crypto, setCrypto] = useState<PorfolioCryptoCostInfo[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +28,7 @@ export default function Portfolio() {
       setCrypto(newCryptoList);
       setLoading(false);
     },
-    [ids.length, lastCrypto]
+    [ids.length]
   );
 
   function getCryptoCostInfo({
@@ -46,16 +45,10 @@ export default function Portfolio() {
     };
   }
 
-  const sum = crypto.reduce(
-    (sum, { priceUsd, amount }) => (sum += amount * Number(priceUsd)),
-    0
-  );
-  const lastCryptoCost = crypto.find(({ id }) => id === lastCrypto.id);
-  const add = lastCryptoCost
-    ? lastCrypto.amount * Number(lastCryptoCost.priceUsd)
-    : 0;
-  const initialSum = sum - add;
-  const diff = (add * 100) / initialSum;
+  const initialSum = getPorfolioSum(portfolio);
+  const newSum = getPorfolioSum(crypto);
+  const diff = initialSum - newSum;
+  const percentDiff = (diff * 100) / initialSum;
   const toggleModal = () => {
     setOpen(!open);
   };
@@ -63,15 +56,17 @@ export default function Portfolio() {
   const content = (
     <>
       <div className={cls.title}>Your portfolio</div>
-      <span className={cls.initial}>${shortenMillionNumber(String(sum))}</span>
+      <span className={cls.initial}>
+        ${shortenMillionNumber(String(initialSum))}
+      </span>
       {initialSum !== 0 && (
         <>
-          {"+ "}
+          {diff >= 0 ? " + " : " "}
           <span className={cls["portfolio__add"]}>
-            {shortenMillionNumber(String(add))}
-          </span>{" "}
-          <span className={cls.diff}>
-            ({shortenMillionNumber(String(diff))}%)
+            {shortenMillionNumber(String(diff))}
+          </span>
+          <span style={{ color: calcColorChange(String(diff)) }}>
+            ({shortenMillionNumber(String(percentDiff))}%)
           </span>
         </>
       )}

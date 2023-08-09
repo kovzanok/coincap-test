@@ -14,7 +14,7 @@ export const calcBgChange = (
 };
 
 export const addComasToStr = (str: string): string => {
-  if (str[0]==='0') return str;
+  if (str[0] === "0") return str;
   if (str === "0") return "-";
   let strToSeparate = "";
   let endOfStr = "";
@@ -40,9 +40,7 @@ const separateArr = (str: string): string[] =>
       return item;
     });
 
-export const shortenMillionNumber = (
-  str: string | null,
-): string => {
+export const shortenMillionNumber = (str: string | null): string => {
   if (!str) return "-";
   const integerPart = Number(str).toFixed(0);
   switch (true) {
@@ -81,4 +79,13 @@ export const formatCryptoData = (price: string | null): string => {
     if (num !== "0") break;
   }
   return stringToFixed(price, fixedNum);
+};
+
+export const getPorfolioSum = (
+  portfolio: (PortfolioCrypto | PorfolioCryptoCostInfo)[]
+): number => {
+  return portfolio.reduce(
+    (sum, { priceUsd, amount }) => (sum += amount * Number(priceUsd)),
+    0
+  );
 };

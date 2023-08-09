@@ -7,13 +7,19 @@ type AddModalProps = {
   name: string;
   symbol: string;
   id: string;
+  priceUsd: string;
   close: () => void;
 };
 
-export default function AddModal({ name, symbol, id, close }: AddModalProps) {
+export default function AddModal({
+  name,
+  symbol,
+  id,
+  priceUsd,
+  close,
+}: AddModalProps) {
   const [value, setValue] = useState("");
-  const { portfolio, setPortfolio, setLastCrypto } =
-    useContext(portfolioContext);
+  const { portfolio, setPortfolio } = useContext(portfolioContext);
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -33,13 +39,21 @@ export default function AddModal({ name, symbol, id, close }: AddModalProps) {
       const addedCrypto = portfolio[addedCryptoIndex];
       setPortfolio([
         ...portfolio.slice(0, addedCryptoIndex),
-        { id, amount: Number(value) + addedCrypto.amount },
+        {
+          id,
+          amount: Number(value) + addedCrypto.amount,
+          priceUsd: addedCrypto.priceUsd,
+          name,
+          symbol,
+        },
         ...portfolio.slice(addedCryptoIndex + 1),
       ]);
     } else {
-      setPortfolio([...portfolio, { id, amount: Number(value) }]);
+      setPortfolio([
+        ...portfolio,
+        { id, amount: Number(value), priceUsd, name, symbol },
+      ]);
     }
-    setLastCrypto({ id, amount: Number(value) });
     closeModal();
   };
 

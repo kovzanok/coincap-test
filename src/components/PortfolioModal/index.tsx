@@ -1,79 +1,39 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Button from "../Button";
 import cls from "./PorfolioModal.module.scss";
 import { portfolioContext } from "../../providers/PorfolioProvider";
-import { useFetching } from "../../hooks";
-import { ApiService } from "../../ApiService";
-import { formatCryptoData } from "../../utils";
-import Loader from "../Loader";
+import { formatCryptoData, getPorfolioSum } from "../../utils";
 
 type PortfolioModalProps = {
   toggleModal: () => void;
 };
 
 export default function PortfolioModal({ toggleModal }: PortfolioModalProps) {
-  const [crypto, setCrypto] = useState<PortfolioCryptoInfo[]>([]);
-  const [loading, setLoading] = useState(true);
   const { portfolio, setPortfolio } = useContext(portfolioContext);
 
-  const ids = portfolio.map(({ id }) => id);
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
   }, []);
-  useFetching(
-    (signal) => {
-      if (ids.length === 0) return Promise.resolve([]);
-      return ApiService.getAllCrypto({ signal, ids, limit: "max" });
-    },
-    (res: CryptoType[]) => {
-      setCrypto(res.map(getPortfolioCryptoInfo));
-      setLoading(false);
-    },
-    [ids.length]
-  );
 
-  function getPortfolioCryptoInfo({
-    name,
-    symbol,
-    priceUsd,
-    id,
-  }: CryptoType): PortfolioCryptoInfo {
-    const portfolioInfo = portfolio.find(
-      (item) => item.id === id
-    ) as PortfolioCrypto;
-    return {
-      name,
-      symbol,
-      priceUsd,
-      ...portfolioInfo,
-    };
-  }
-
-  const sum = crypto.reduce(
-    (sum, { priceUsd, amount }) => (sum += amount * Number(priceUsd)),
-    0
-  );
+  const sum = getPorfolioSum(portfolio);
 
   const removeCrypto = (id: string) => {
     setPortfolio(portfolio.filter((item) => item.id !== id));
-    setLoading(true);
   };
 
   let content;
 
-  if (loading) {
-    content = <Loader />;
-  } else if (portfolio.length === 0) {
+  if (portfolio.length === 0) {
     content = <div className={cls.empty}>Portfolio is empty.</div>;
   } else {
     content = (
       <>
         <h2 className={cls.sum}>Total: ${formatCryptoData(String(sum))}</h2>
         <ul className={cls.list}>
-          {crypto.map(({ name, symbol, priceUsd, amount, id }) => (
+          {portfolio.map(({ name, symbol, priceUsd, amount, id }) => (
             <li className={cls.item} key={id}>
               <div className={cls.info}>
                 <div className={cls.name}>{name}</div>
@@ -108,7 +68,9 @@ export default function PortfolioModal({ toggleModal }: PortfolioModalProps) {
     <div className={cls.modal}>
       <div className={cls["modal__body"]}>
         {content}
-        <Button width="80px" height="40px" onClick={toggleModal}>Back</Button>
+        <Button width='80px' height='40px' onClick={toggleModal}>
+          Back
+        </Button>
       </div>
     </div>
   );
