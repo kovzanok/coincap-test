@@ -7,6 +7,7 @@ import PortfolioModal from "../PortfolioModal";
 import Loader from "../Loader";
 import {
   calcColorChange,
+  formatCryptoData,
   getPorfolioSum,
   shortenMillionNumber,
 } from "../../utils";
@@ -47,7 +48,7 @@ export default function Portfolio() {
 
   const initialSum = getPorfolioSum(portfolio);
   const newSum = getPorfolioSum(crypto);
-  const diff = initialSum - newSum;
+  const diff = newSum - initialSum;
   const percentDiff = (diff * 100) / initialSum;
   const toggleModal = () => {
     setOpen(!open);
@@ -57,7 +58,7 @@ export default function Portfolio() {
     <>
       <div className={cls.title}>Your portfolio</div>
       <span className={cls.initial}>
-        ${shortenMillionNumber(String(initialSum))}
+        ${shortenMillionNumber(String(newSum))}
       </span>
       {initialSum !== 0 && (
         <>
@@ -66,7 +67,7 @@ export default function Portfolio() {
             {shortenMillionNumber(String(diff))}
           </span>
           <span style={{ color: calcColorChange(String(diff)) }}>
-            ({shortenMillionNumber(String(percentDiff))}%)
+            ({formatCryptoData(String(percentDiff))}%)
           </span>
         </>
       )}
