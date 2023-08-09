@@ -1,6 +1,6 @@
 export class ApiService {
   static BASE_URL = "https://api.coincap.io";
-  static LIMIT = 20;
+  static LIMIT = 10;
 
   static async getAllCrypto({
     page = 0,

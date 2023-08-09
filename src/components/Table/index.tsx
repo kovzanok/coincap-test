@@ -15,7 +15,7 @@ import { ApiService } from "../../ApiService";
 import Loader from "../Loader";
 import { useFetching } from "../../hooks";
 
-type CryptoData = Pick<CryptoType, "name" | "symbol" | "id">;
+type CryptoData = Pick<CryptoType, "name" | "symbol" | "id" | "priceUsd">;
 
 export default function Table() {
   const navigate = useNavigate();
@@ -26,6 +26,7 @@ export default function Table() {
     name: "",
     symbol: "",
     id: "",
+    priceUsd: "",
   });
   const [cryptoArr, setCryptoArr] = useState<CryptoType[]>([]);
   const [loading, setLoading] = useState(true);
@@ -39,14 +40,14 @@ export default function Table() {
     [page]
   );
 
-  const openModal = ({ name, symbol, id }: CryptoData) => {
+  const openModal = ({ name, symbol, id, priceUsd }: CryptoData) => {
     setOpen(true);
-    setCryptoData({ name, id, symbol });
+    setCryptoData({ name, id, symbol, priceUsd });
   };
 
   const closeModal = () => {
     setOpen(false);
-    setCryptoData({ name: "", id: "", symbol: "" });
+    setCryptoData({ name: "", id: "", symbol: "", priceUsd: "" });
   };
   const content = loading ? (
     <Loader />
@@ -115,11 +116,11 @@ export default function Table() {
                 </td>
                 <td className={cls.cell}>
                   <Button
-                    width="1px"
-                    height="20px"
+                    width='1px'
+                    height='20px'
                     onClick={(e) => {
                       e.stopPropagation();
-                      openModal({ name, symbol, id });
+                      openModal({ name, symbol, id, priceUsd });
                     }}
                   >
                     +
@@ -159,7 +160,9 @@ export default function Table() {
         <h1>Today's Cryptocurrency Prices</h1>
         {content}
       </Container>
-      {open && <AddModal close={closeModal} {...cryptoData} />}
+      {open && (
+        <AddModal close={closeModal} {...cryptoData} />
+      )}
     </main>
   );
 }
