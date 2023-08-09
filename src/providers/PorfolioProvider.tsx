@@ -11,7 +11,7 @@ type PortfolioContext = {
   setPortfolio: Dispatch<SetStateAction<PortfolioCrypto[]>>;
 };
 
-const portfolioStr = localStorage.getItem("portfolio");
+const portfolioStr = localStorage.getItem("coincap-portfolio");
 
 const initialPortfolio = portfolioStr
   ? (JSON.parse(portfolioStr) as PortfolioCrypto[])
