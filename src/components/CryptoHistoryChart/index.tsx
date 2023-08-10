@@ -8,31 +8,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import cls from "./CryptoHistoryChart.module.scss";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useFetching } from "../../hooks";
-import { ApiService } from "../../ApiService";
 
-export default function CryptoHistoryChart() {
-  const [history, setHistory] = useState<CryptoHistoryTimeStamp[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { id } = useParams();
+type CryptoHistoryChartProps = {
+  history: CryptoHistoryTimeStamp[];
+};
 
-  useFetching(
-    (signal) => {
-      if (id) {
-        return ApiService.getPriceHistoryById(id, signal);
-      }
-    },
-    (res: CryptoHistoryTimeStamp[]) => {
-      setHistory(res);
-      setLoading(false);
-    },
-    [id]
-  );
-
-  if (loading || !history || !history.length) return null;
-
+export default function CryptoHistoryChart({
+  history,
+}: CryptoHistoryChartProps) {
   const data = history.map(({ priceUsd, time }) => ({
     price: Number(priceUsd),
     time: new Date(time).toISOString().slice(0, 10),
@@ -51,7 +34,13 @@ export default function CryptoHistoryChart() {
           <XAxis tickMargin={10} minTickGap={40} dataKey='time' />
           <Tooltip />
           <YAxis width={isSmallNumbers ? 90 : 60} type='number' unit='$' />
-          <Line dot={false} type='monotone' dataKey='price' stroke='#7979f0' />
+          <Line
+            isAnimationActive={false}
+            dot={false}
+            type='monotone'
+            dataKey='price'
+            stroke='#7979f0'
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>
