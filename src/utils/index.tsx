@@ -63,15 +63,11 @@ export const getPageFromSearchParams = (searchParams: URLSearchParams) => {
 
 export const formatCryptoData = (price: string | null): string => {
   if (!price) return "-";
+  if (price==='0') return '0.00'
   const dotIndex = price.indexOf(".");
   const integerPart = Number(price).toFixed(0);
   const fractialPart = price.slice(dotIndex + 1);
-  if (
-    (fractialPart[1] !== "0" &&
-      fractialPart[0] !== "0" &&
-      integerPart !== "0") ||
-    integerPart !== "-0"
-  ) {
+  if (integerPart + ".00" !== "0.00" && integerPart + ".00" !== "-0.00") {
     return stringToFixed(price, 2);
   }
   let fixedNum = 0;
@@ -83,7 +79,7 @@ export const formatCryptoData = (price: string | null): string => {
 };
 
 export const getPorfolioSum = (
-  portfolio: (PortfolioCrypto | PorfolioCryptoCostInfo)[]
+  portfolio: (PortfolioCrypto)[]
 ): number => {
   return portfolio.reduce(
     (sum, { priceUsd, amount }) => (sum += amount * Number(priceUsd)),
