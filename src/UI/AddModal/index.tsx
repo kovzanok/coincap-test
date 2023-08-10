@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Button from "../Button";
 import cls from "./AddModal.module.scss";
 import { portfolioContext } from "../../providers/PorfolioProvider";
+import Input from "../Input";
 
 type AddModalProps = {
   name: string;
@@ -63,16 +64,14 @@ export default function AddModal({
         <h1 className={cls.title}>Add {name} to portfolio</h1>
         <form onSubmit={handleSubmit} className={cls.form}>
           <label className={cls.label}>
-            <input
-              required
-              min={0.0001}
-              max={1000}
-              step='0.0001'
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              name='amount'
-              className={cls.input}
+            <Input
               type='number'
+              name='amount'
+              value={value}
+              max={1000}
+              min={0.001}
+              step={0.001}
+              changeValue={(e) => setValue(e.target.value)}
             />
             <span className={cls.symbol}>{symbol}</span>
           </label>

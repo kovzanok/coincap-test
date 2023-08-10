@@ -1,93 +1,72 @@
-import { useParams } from "react-router-dom";
-import { useState } from "react";
 import { addComasToStr, calcColorChange, formatCryptoData } from "../../utils";
-import AddModal from "../AddModal";
-import Button from "../Button";
+import Button from "../../UI/Button";
 import cls from "./CryptoInfo.module.scss";
-import { ApiService } from "../../ApiService";
-import Loader from "../Loader";
-import { useFetching } from "../../hooks";
-import NotFound from "../NotFound";
 
-export default function CryptoInfo() {
-  const [crypto, setCrypto] = useState<CryptoType | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
-  const { id } = useParams();
+type CryptoInfoProps = {
+  crypto: CryptoType;
+  openModal: (data: CryptoData) => void;
+};
 
-  useFetching(
-    (signal) => {
-      if (id) {
-        return ApiService.getCryptoById(id, signal);
-      }
-    },
-    (res) => {
-      setCrypto(res);
-      setLoading(false);
-    },
-    [id]
-  );
-
-  const openModal = () => {
-    setOpen(true);
-  };
-
-  const closeModal = () => {
-    setOpen(false);
-  };
-
-  if (loading)
-    return (
-      <div className={cls.loader}>
-        <Loader />
-      </div>
-    );
-
-  if (!crypto) return <NotFound id={id} />;
-
+export default function CryptoInfo({
+  crypto: {
+    vwap24Hr,
+    volumeUsd24Hr,
+    priceUsd,
+    name,
+    id,
+    marketCapUsd,
+    maxSupply,
+    supply,
+    symbol,
+    changePercent24Hr,
+  },
+  openModal,
+}: CryptoInfoProps) {
   return (
     <div className={cls.info}>
-      {" "}
       <div className={cls.primary}>
         <div>
           <div>
-            {crypto.name} <span className={cls.symbol}>{crypto.symbol}</span>
+            {name} <span className={cls.symbol}>{symbol}</span>
           </div>
-          <div className={cls.price}>${formatCryptoData(crypto.priceUsd)}</div>
+          <div className={cls.price}>${formatCryptoData(priceUsd)}</div>
           <div
             className={cls.change}
-            style={{ color: calcColorChange(crypto.changePercent24Hr) }}
+            style={{ color: calcColorChange(changePercent24Hr) }}
           >
-            {formatCryptoData(crypto.changePercent24Hr)}% (24h)
+            {formatCryptoData(changePercent24Hr)}% (24h)
           </div>
         </div>
-        <Button width='170px' height='50px' onClick={openModal}>
+        <Button
+          width='170px'
+          height='50px'
+          onClick={() => openModal({ name, id, priceUsd, symbol })}
+        >
           Add to portfolio
         </Button>
       </div>
       <div className={cls.secondary}>
         <div className={cls.row}>
           <span className={cls.text}>VWAP</span>
-          {addComasToStr(formatCryptoData(crypto.vwap24Hr))}
+          {addComasToStr(formatCryptoData(vwap24Hr))}
         </div>
         <div className={cls.row}>
           <span className={cls.text}>Market cap</span> $
-          {addComasToStr(formatCryptoData(crypto.marketCapUsd))}
+          {addComasToStr(formatCryptoData(marketCapUsd))}
         </div>
         <div className={cls.row}>
           <span className={cls.text}>Volume</span>$
-          {addComasToStr(formatCryptoData(crypto.volumeUsd24Hr))}
+          {addComasToStr(formatCryptoData(volumeUsd24Hr))}
         </div>
         <div className={cls.row}>
           <span className={cls.text}>Supply</span>
-          {addComasToStr(formatCryptoData(crypto.supply))} {crypto.symbol}
+          {addComasToStr(formatCryptoData(supply))} {symbol}
         </div>
         <div className={cls.row}>
           <span className={cls.text}>Max supply</span>
-          {addComasToStr(formatCryptoData(crypto.maxSupply))} {crypto.symbol}
+          {addComasToStr(formatCryptoData(maxSupply))} {symbol}
         </div>
       </div>
-      {open && <AddModal close={closeModal} {...crypto} />}
     </div>
   );
 }

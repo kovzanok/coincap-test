@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import Button from "../Button";
+import Button from "../../UI/Button";
 import cls from "./PorfolioModal.module.scss";
 import { portfolioContext } from "../../providers/PorfolioProvider";
 import { formatCryptoData, getPorfolioSum } from "../../utils";

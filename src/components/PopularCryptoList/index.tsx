@@ -1,20 +1,15 @@
-import { useState } from "react";
-import { useFetching } from "../../hooks";
 import { calcBgChange, calcColorChange, formatCryptoData } from "../../utils";
 import cls from "./PopularCryptoList.module.scss";
-import { ApiService } from "../../ApiService";
 import HorizontalLoader from "../HorizontalLoader";
 
-export default function PopularCryptoList() {
-  const [popularCrypto, setPopularCrypto] = useState<CryptoType[]>([]);
+type PopularCryptoListProps = {
+  popularCrypto: CryptoType[];
+};
 
-  useFetching(
-    (signal) => ApiService.getAllCrypto({ signal, limit: 3 }),
-    setPopularCrypto,
-    []
-  );
-
-  if (popularCrypto.length === 0) return <HorizontalLoader />;
+export default function PopularCryptoList({
+  popularCrypto,
+}: PopularCryptoListProps) {
+  if (!popularCrypto || popularCrypto.length === 0) return <HorizontalLoader />;
   return (
     <ul className={cls["list"]}>
       {popularCrypto.map(

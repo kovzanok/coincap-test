@@ -10,7 +10,6 @@
   @include media-crypto-layout-breakpoint {
     justify-content: center;
   }
-
 }
 
 .button {
@@ -18,4 +17,11 @@
   @include media-crypto-layout-breakpoint {
     margin-top: 20px;
   }
+}
+
+.loader {
+  min-height: 390px;
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
 }

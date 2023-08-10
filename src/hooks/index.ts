@@ -1,8 +1,8 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 
 export const useFetching = (
-  fetchFn: (signal: AbortSignal) => Promise<unknown> | undefined,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fetchFn: (signal: AbortSignal) => Promise<any> | undefined,
   callback: (res: any) => void,
   deps: unknown[]
 ) => {

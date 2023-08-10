@@ -17,7 +17,10 @@ type CryptoHistoryTimeStamp = {
   time: string;
 };
 
-type PortfolioCrypto = Pick<CryptoType, "id" | 'priceUsd' | 'symbol' | 'name'> & {
+type PortfolioCrypto = Pick<
+  CryptoType,
+  "id" | "priceUsd" | "symbol" | "name"
+> & {
   amount: number;
 };
 
@@ -30,4 +33,9 @@ type AllCryptoRequestParams = {
   limit?: number | "max";
 };
 
-type PorfolioCryptoCostInfo = Omit<PortfolioCrypto, "name" | "symbol">;
+type PorfolioCryptoCostInfo = Omit<
+  PortfolioCrypto,
+  "name" | "symbol" | "amount"
+>;
+
+type CryptoData = Pick<CryptoType, "name" | "symbol" | "id" | "priceUsd">;

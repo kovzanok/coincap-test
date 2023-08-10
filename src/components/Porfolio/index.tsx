@@ -1,9 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import cls from "./Porfolio.module.scss";
 import { portfolioContext } from "../../providers/PorfolioProvider";
-import { useFetching } from "../../hooks";
-import { ApiService } from "../../ApiService";
-import PortfolioModal from "../PortfolioModal";
 import Loader from "../Loader";
 import {
   calcColorChange,
@@ -12,67 +9,40 @@ import {
   shortenMillionNumber,
 } from "../../utils";
 
-export default function Portfolio() {
+type PortfolioProps = {
+  loading: boolean;
+  toggleModal: () => void;
+  currentCrypto: PorfolioCryptoCostInfo[];
+};
+
+export default function Portfolio({
+  toggleModal,
+  loading,
+  currentCrypto,
+}: PortfolioProps) {
   const { portfolio } = useContext(portfolioContext);
   const ids = portfolio.map(({ id }) => id);
-  const [crypto, setCrypto] = useState<PorfolioCryptoCostInfo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
-  useFetching(
-    (signal) => {
-      setLoading(true);
-      if (ids.length === 0) return Promise.resolve([]);
-      return ApiService.getAllCrypto({ signal, ids, limit: "max" });
-    },
-    (res: CryptoType[]) => {
-      const newCryptoList = portfolio.length ? res.map(getCryptoCostInfo) : [];
-      setCrypto(newCryptoList);
-      setLoading(false);
-    },
-    [ids.length]
-  );
+  const newSum = ids.reduce((acc, id) => {
+    const p = portfolio.find((item) => item.id === id);
+    const cr = currentCrypto.find((item) => item.id === id);
+    if (p && cr) {
+      return acc + p.amount * Number(cr.priceUsd);
+    }
+    return acc + 0;
+  }, 0);
 
-  function getCryptoCostInfo({
-    priceUsd,
-    id,
-  }: CryptoType): PorfolioCryptoCostInfo {
-    const portfolioInfo = portfolio.find(
-      (item) => item.id === id
-    ) as PortfolioCrypto;
-    return {
-      priceUsd,
-      id,
-      amount: portfolioInfo.amount,
-    };
-  }
+  const oldSum = ids.reduce((acc, id) => {
+    const p = portfolio.find((item) => item.id === id);
+    const cr = currentCrypto.find((item) => item.id === id);
+    if (p && cr) {
+      return acc + p.amount * Number(p.priceUsd);
+    }
+    return acc + 0;
+  }, 0);
 
-  const initialSum = getPorfolioSum(portfolio);
-  const newSum = getPorfolioSum(crypto);
-  const diff = newSum - initialSum;
-  const percentDiff = (diff * 100) / initialSum;
-  const toggleModal = () => {
-    setOpen(!open);
-  };
-
-  const content = (
-    <>
-      <div className={cls.title}>Your portfolio</div>
-      <span className={cls.initial}>
-        ${shortenMillionNumber(String(newSum))}
-      </span>
-      {initialSum !== 0 && (
-        <>
-          {diff >= 0 ? " + " : " "}
-          <span className={cls["portfolio__add"]}>
-            {shortenMillionNumber(String(diff))}
-          </span>
-          <span style={{ color: calcColorChange(String(diff)) }}>
-            ({formatCryptoData(String(percentDiff))}%)
-          </span>
-        </>
-      )}
-    </>
-  );
+  const portfolioSum = getPorfolioSum(portfolio);
+  const diff = newSum - oldSum;
+  const percentDiff = (diff * 100) / portfolioSum;
 
   return (
     <div>
@@ -80,10 +50,23 @@ export default function Portfolio() {
         <Loader width='37px' height='37px' />
       ) : (
         <div onClick={toggleModal} className={cls.portfolio}>
-          {content}
+          <div className={cls.title}>Your portfolio</div>
+          <span className={cls.initial}>
+            ${shortenMillionNumber(String(portfolioSum))}
+          </span>
+          {newSum !== 0 && diff !== 0 && (
+            <>
+              {diff > 0 ? " + " : " "}
+              <span className={cls["portfolio__add"]}>
+                {formatCryptoData(String(diff))}
+              </span>
+              <span style={{ color: calcColorChange(String(diff)) }}>
+                ({formatCryptoData(String(percentDiff))}%)
+              </span>
+            </>
+          )}
         </div>
       )}
-      {open && <PortfolioModal toggleModal={toggleModal} />}
     </div>
   );
 }
