@@ -21,29 +21,23 @@ export default function Portfolio({
   currentCrypto,
 }: PortfolioProps) {
   const { portfolio } = useContext(portfolioContext);
-  const ids = portfolio.map(({ id }) => id);
-  const newSum = ids.reduce((acc, id) => {
-    const p = portfolio.find((item) => item.id === id);
-    const cr = currentCrypto.find((item) => item.id === id);
-    if (p && cr) {
-      return acc + p.amount * Number(cr.priceUsd);
-    }
-    return acc + 0;
-  }, 0);
 
-  const oldSum = ids.reduce((acc, id) => {
-    const p = portfolio.find((item) => item.id === id);
-    const cr = currentCrypto.find((item) => item.id === id);
-    if (p && cr) {
-      return acc + p.amount * Number(p.priceUsd);
+  let oldSum = 0;
+  let newSum = 0;
+
+  currentCrypto.forEach(({ id, priceUsd }) => {
+    const crypto = portfolio.find((item) => item.id === id);
+    if (crypto) {
+      oldSum += crypto.amount * Number(crypto.priceUsd);
+      newSum += crypto.amount * Number(priceUsd);
     }
-    return acc + 0;
-  }, 0);
+  });
 
   const portfolioSum = getPorfolioSum(portfolio);
   const diff = newSum - oldSum;
   const percentDiff = (diff * 100) / portfolioSum;
-
+  console.log(newSum, oldSum);
+  console.log(diff);
   return (
     <div>
       {loading ? (
@@ -54,7 +48,7 @@ export default function Portfolio({
           <span className={cls.initial}>
             ${shortenMillionNumber(String(portfolioSum))}
           </span>
-          {newSum !== 0 && diff !== 0 && (
+          {diff !== 0 && (
             <>
               {diff > 0 ? " + " : " "}
               <span className={cls["portfolio__add"]}>
