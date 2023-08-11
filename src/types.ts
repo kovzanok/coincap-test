@@ -22,6 +22,7 @@ type PortfolioCrypto = Pick<
   "id" | "priceUsd" | "symbol" | "name"
 > & {
   amount: number;
+  portfolioId: string;
 };
 
 type LastAddedCrypto = Pick<CryptoType, "id">;

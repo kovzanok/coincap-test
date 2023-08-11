@@ -14,26 +14,11 @@ export default function Layout() {
   const [loading, setLoading] = useState(true);
   const [popularCrypto, setPopularCrypto] = useState<CryptoType[]>([]);
 
-  useFetching(
-    (signal) => {
-      const ids = portfolio.map(({ id }) => id);
-      if (ids.length === 0) return Promise.resolve([]);
-      return ApiService.getAllCrypto({ signal, ids, limit: "max" });
-    },
-    (res: CryptoType[]) => {
-      const newPortfolioToSave = res.map(({ id, priceUsd }) => {
-        const crypto = portfolio.find((crypto) => crypto.id === id);
-        if (crypto) return { ...crypto, priceUsd };
-      });
-      window.onunload = () => {
-        localStorage.setItem(
-          "coincap-portfolio",
-          JSON.stringify(newPortfolioToSave)
-        );
-      };
-    },
-    [portfolio]
-  );
+  useEffect(() => {
+    window.onunload = () => {
+      localStorage.setItem("coincap-portfolio", JSON.stringify(portfolio));
+    };
+  }, [portfolio]);
 
   useFetching(
     (signal) => {
