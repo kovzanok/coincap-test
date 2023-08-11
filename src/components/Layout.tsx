@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import { portfolioContext } from "../providers/PorfolioProvider";
@@ -9,7 +9,7 @@ import PortfolioModal from "../UI/PortfolioModal";
 export default function Layout() {
   const { portfolio } = useContext(portfolioContext);
   const [open, setOpen] = useState(false);
-  const ids = portfolio.map(({ id }) => id);
+  const ids = Array.from(new Set(portfolio.map(({ id }) => id)));
   const [currentCrypto, setCrypto] = useState<PorfolioCryptoCostInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [popularCrypto, setPopularCrypto] = useState<CryptoType[]>([]);
