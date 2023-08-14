@@ -3,6 +3,7 @@ import Button from "../Button";
 import cls from "./AddModal.module.scss";
 import { portfolioContext } from "../../providers/PorfolioProvider";
 import Input from "../Input";
+import { nanoid } from "nanoid";
 
 type AddModalProps = {
   name: string;
@@ -35,26 +36,18 @@ export default function AddModal({
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const addedCryptoIndex = portfolio.findIndex((item) => item.id === id);
-    if (addedCryptoIndex !== -1) {
-      const addedCrypto = portfolio[addedCryptoIndex];
-      setPortfolio([
-        ...portfolio.slice(0, addedCryptoIndex),
-        {
-          id,
-          amount: Number(value) + addedCrypto.amount,
-          priceUsd: addedCrypto.priceUsd,
-          name,
-          symbol,
-        },
-        ...portfolio.slice(addedCryptoIndex + 1),
-      ]);
-    } else {
-      setPortfolio([
-        ...portfolio,
-        { id, amount: Number(value), priceUsd, name, symbol },
-      ]);
-    }
+    setPortfolio([
+      ...portfolio,
+      {
+        portfolioId: nanoid(),
+        id,
+        amount: Number(value),
+        priceUsd,
+        name,
+        symbol,
+      },
+    ]);
+
     closeModal();
   };
 

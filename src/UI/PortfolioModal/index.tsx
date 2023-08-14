@@ -20,8 +20,8 @@ export default function PortfolioModal({ toggleModal }: PortfolioModalProps) {
 
   const sum = getPorfolioSum(portfolio);
 
-  const removeCrypto = (id: string) => {
-    setPortfolio(portfolio.filter((item) => item.id !== id));
+  const removeCrypto = (portfolioId:string) => {
+    setPortfolio(portfolio.filter((item) => item.portfolioId !== portfolioId));
   };
 
   let content;
@@ -33,8 +33,8 @@ export default function PortfolioModal({ toggleModal }: PortfolioModalProps) {
       <>
         <h2 className={cls.sum}>Total: ${formatCryptoData(String(sum))}</h2>
         <ul className={cls.list}>
-          {portfolio.map(({ name, symbol, priceUsd, amount, id }) => (
-            <li className={cls.item} key={id}>
+          {portfolio.map(({ name, symbol, priceUsd, amount,portfolioId }) => (
+            <li className={cls.item} key={portfolioId}>
               <div className={cls.info}>
                 <div className={cls.name}>{name}</div>
                 <div className={cls.price}>${formatCryptoData(priceUsd)}</div>
@@ -50,7 +50,7 @@ export default function PortfolioModal({ toggleModal }: PortfolioModalProps) {
               <Button
                 onClick={(e) => {
                   e.stopPropagation();
-                  removeCrypto(id);
+                  removeCrypto(portfolioId);
                 }}
                 width='40px'
                 height='40px'
