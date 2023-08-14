@@ -5,6 +5,7 @@ import { portfolioContext } from "../providers/PorfolioProvider";
 import { useFetching } from "../hooks";
 import { ApiService } from "../ApiService";
 import PortfolioModal from "../UI/PortfolioModal";
+import { nanoid } from "nanoid";
 
 export default function Layout() {
   const { portfolio } = useContext(portfolioContext);
@@ -39,6 +40,7 @@ export default function Layout() {
         ? currentPortfolioCrypto.map(({ id, priceUsd }) => ({
             id,
             priceUsd,
+            portfolioId: nanoid(),
           }))
         : [];
       setCrypto(newCryptoList);

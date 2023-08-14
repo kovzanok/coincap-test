@@ -36,17 +36,30 @@ export default function AddModal({
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    setPortfolio([
-      ...portfolio,
-      {
-        portfolioId: nanoid(),
-        id,
-        amount: Number(value),
-        priceUsd,
-        name,
-        symbol,
-      },
-    ]);
+    const addedCryptoIndex = portfolio.findIndex((item) => item.id === id);
+    const addedCrypto = portfolio[addedCryptoIndex];
+    if (addedCrypto && addedCrypto.priceUsd === priceUsd) {
+      setPortfolio([
+        ...portfolio.slice(0, addedCryptoIndex),
+        {
+          ...addedCrypto,
+          amount: Number(value) + addedCrypto.amount,
+        },
+        ...portfolio.slice(addedCryptoIndex + 1),
+      ]);
+    } else {
+      setPortfolio([
+        ...portfolio,
+        {
+          portfolioId: nanoid(),
+          id,
+          amount: Number(value),
+          priceUsd,
+          name,
+          symbol,
+        },
+      ]);
+    }
 
     closeModal();
   };
